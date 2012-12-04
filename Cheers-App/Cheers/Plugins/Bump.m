@@ -5,6 +5,8 @@
 
 @implementation Bump
 
+
+
 - (void)bump:(CDVInvokedUrlCommand*)command
 {
     
@@ -45,6 +47,8 @@
     }];
     
     [[BumpClient sharedClient] setBumpEventBlock:^(bump_event event) {
+        
+        
         switch(event) {
             case BUMP_EVENT_BUMP:
                  
@@ -58,10 +62,27 @@
    
 }
 
+- (void)bumpable:(CDVInvokedUrlCommand*)command{
+    
+    NSString* status = [command.arguments objectAtIndex:0];
 
+    if ([status isEqualToString:@"NO"]){
+     [BumpClient sharedClient].bumpable = NO;
+        NSLog(@"not bumpable");
+    }else{
+        [BumpClient sharedClient].bumpable = YES;
+        NSLog(@"yes bumpable");
+
+    }
+    
+    
+}
 
 - (void) bumpNoMatch {
-     
+    
+    [BumpClient sharedClient].bumpable = YES;
+
+    
     NSLog(@"NO-MATCH");
     NSString *js = [NSString stringWithFormat:@"updateContent( '%@' );", @"NO-MATCH"];
     [self writeJavascript:js];
@@ -69,6 +90,8 @@
 
 - (void) bumpDetected {
    
+    [BumpClient sharedClient].bumpable = NO;
+    
     NSLog(@"BUMP-DETECTED");
     NSString *js = [NSString stringWithFormat:@"updateContent( '%@' );", @"BUMP-DETECTED"];
     [self writeJavascript:js];

@@ -10,13 +10,27 @@ $action = getForm("action");
 $id     = getForm("id");
 $lat    = getForm("lat");
 $lon    = getForm("lon");
+$bump_with = getForm("bump_with");
+$lat    = getForm('lat');
+$lng    = getForm('lng'); //deprecated
+
 
 //@todo create a token for direct auth
 
+if ($action == 'clunkmate'){
+    $sql = "SELECT t1.id as user_id, t1.facebook_uid, concat(t1.first_name,' ',  t1.last_name) as name , t1.photo
+            FROM login t1 
+            INNER JOIN clunkmate t2 ON t1.id = t2.clunker_id 
+            WHERE t2.user_id = ? ";
+    $rows = $db->fetchAll($sql, array($id));
+    
+    echo json_encode($rows);
+    exit;
+}
+
 //get business within the geo
 if ($action  == 'getgeo'){
-    $lat = getForm('lat');
-    $lng = getForm('lng');
+    
     
     
     
@@ -43,39 +57,108 @@ if ($action  == 'getgeo'){
     
 }
 
+if ($action == 'deals'){
+    
+  $sql = "SELECT t1.id, t1.bid, t1.lat, t1.lon, round( ( 3959 * acos( cos( radians(?) ) * cos( radians( t1.lat ) ) 
+            * cos( radians( t1.lon ) - radians(?) ) + sin( radians(?) ) * 
+            sin( radians( t1.lat ) ) ) ),2 ) AS distance,     t2.name as bp_name, t2.photo_url
+           
+            FROM geodata t1 
+            INNER JOIN business t2 ON t1.bid = t2.id
+            HAVING     distance < 130   
+            ORDER BY distance LIMIT 0 , 100";
+    $rows = $db->fetchAll($sql, array($lat, $lon, $lat));
+     
+    echo json_encode($rows);
+ 
+    exit;
+}
+
 if ($action == 'match'){
     
+    //get name bump with
+    $sql = "SELECT * FROM login WHERE id = ? ";
+    $clunk_with = $db->fetchRow($sql, array($bump_with));
     
     //save to clunks
-    $sql = "INSERT INTO clunks(lat, lon) VALUES (?, ?)";
-    $res = $db->query($sql, array($lat, $lon));
+    $sql = "INSERT INTO clunks(user_id, bump_with, lat, lon) VALUES (?, ?,
+            ?, ?)";
+    $res = $db->query($sql, array($id, $bump_with, $lat, $lon));
       
     $sql = "SELECT t1.id, t1.bid,  ( 3959 * acos( cos( radians(?) ) * cos( radians( t1.lat ) ) 
             * cos( radians( t1.lon ) - radians(?) ) + sin( radians(?) ) * 
-            sin( radians( t1.lat ) ) ) ) AS distance, t2.name
-            
+            sin( radians( t1.lat ) ) ) ) AS distance, t2.name, t3.points, 
+            t3.last_update as last_clunked, t5.max_total_points , t5.cooldown,
+            t5.first_clunk_points , t5.normal_clunk_points 
             FROM geodata t1 
             INNER JOIN business t2 ON t1.bid = t2.id
-            
-            ORDER BY distance LIMIT 0 , 20";
+            LEFT JOIN  user_points t3 ON t1.bid = t3.bp_id AND t3.user_id = ?
+            LEFT JOIN clunks t4 on t3.user_id = t4.user_id 
+            LEFT JOIN bp_rules t5 ON t1.bid = t5.bid
+            GROUP BY t1.bid
+            ORDER BY distance LIMIT 0 , 2
+            ";
    // HAVING            distance < 0.25
 
      
-    $rows = $db->fetchAll($sql, array($lat, $lon, $lat));
-     
-   // print_r($rows);
+    $rows = $db->fetchAll($sql, array($lat, $lon, $lat, $id));
+   
+   // echo '<pre>';
+    // print_r($rows);
     
     if($rows){ 
        
-        if( $rows[0]['distance'] == '' ){
-            
+        if( !is_numeric($rows[0]['distance']) ){
+             echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
             echo 'Sorry, we cannot determine your location';
             
         }elseif ($rows[0]['distance'] < $radius_check){
-
-            echo 'Points added for '.$rows[0]['name'];
+           
+            $add_points = true;
+            $no_points_reason = ''; 
+            $points_to_add = $rows[0]['normal_clunk_points'];
+            
+            
+            
+            //print_r($rules);
+            
+            $hour_last_clunked = (strtotime(date("Y-m-d H:i:s")) - strtotime($rows[0]['last_clunked']))/3600;
+          //  echo 'last hour clunked = '.$hour_last_clunked;
+            
+            if ($rows[0]['cooldown'] > $hour_last_clunked) {
+                $add_points = false;
+                $no_points_reason = 'Need to wait '.( round($rows[0]['cooldown'] - $hour_last_clunked,0)) . ' hour(s) until you can clunked again!';
+                 
+            }
+            
+            if ($rows[0]['last_clunked'] == '') {
+                 $points_to_add = $rows[0]['first_clunk_points'];
+            }
+            
+             if ($rows[0]['points'] >=  $rows[0]['max_total_points']) {
+                 $add_points = false;
+                 $no_points_reason = 'You have reached the maximum points, redeem it now for a free drink! ';
+            }
+            
+            
+            
+             echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
+             
+             if (!$add_points){
+                  echo 'Sorry no points added for '.$rows[0]['name']. '<br> Your Points still the same : '.( intval($rows[0]['points'])   );
+                  echo  '<br>'.$no_points_reason;
+             }else{
+             
+              echo 'Points added for '.$rows[0]['name']. '<br> Your Points now : '.( intval($rows[0]['points']) + $points_to_add  );
+              echo ' You gained '. $points_to_add;
+                //add points here
+                $sql ="INSERT INTO user_points (bp_id, user_id , points) VALUES (? , ? , ?)
+                        ON DUPLICATE KEY UPDATE points = points + ?";
+                $res = $db->query($sql, array($rows[0]['bid'], $id, $points_to_add, $points_to_add));
+             }
 
         }else{
+             echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
              echo 'Sorry the nearest Cheers deal is at "'.$rows[0]['name'].'" which is '.$rows[0]['distance']. ' miles away. Click Find deals to know more.';
           
         }
@@ -106,7 +189,7 @@ if ($action =='fblogin'){
                 $facebook_uid = $fb_details['id'];
                 $first_name   = $fb_details['first_name'];
                 $last_name    = $fb_details['last_name'];
-                $photo        = $fb_details['link'];
+                $photo        = $fb_details['photo_url'];
 
                 //check if user already exist
                 $sql = "SELECT * FROM login WHERE facebook_uid = ? LIMIT 1";
@@ -136,6 +219,22 @@ if ($action =='fblogin'){
     echo "{success:false, reason: 'Facebook token error' }"; 
     exit;
     
+}
+
+if ($action == 'myclunks'){
+    
+    $sql = "SELECT count(t1.id) as total , t1.bump_with, t2.facebook_uid,
+            t2.first_name, t2.last_name, MAX(t1.date) as last_clunked FROM clunks t1 
+            INNER JOIN login t2 on t1.bump_with = t2.id
+            WHERE t1.user_id = ?
+            GROUP by t1.bump_with
+            ORDER BY last_clunked DESC";
+     $rows = $db->fetchAll($sql, array($id));
+     //print_r($rows);
+     echo json_encode($rows);
+     exit;
+     echo "[{user_id:4, photo_url:'http://graph.facebook.com/100000895460798/picture', total: '5', last_clunked:'November 14' },{user_id:4, photo_url:'http://www.facebook.com/profile.php?id=100000895460798', total: '5', last_clunked:'November 14' }]"; 
+     exit;
 }
 
 function logStuffs(){

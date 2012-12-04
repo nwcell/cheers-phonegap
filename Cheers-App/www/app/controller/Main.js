@@ -17,7 +17,9 @@ Ext.define("Cheers.controller.Main", {
             backFromMap:    "#backFromMap",
             mainPannel:     "#mainPannel",
             clunkmateView:  "#clunkmateView",
-            myClunksList:   "#myClunksList"
+            myClunksList:   "#myClunksList",
+            bump_yes:       "#bump_yes",
+            bump_no:        "#bump_no"
              
         },
         control: {
@@ -48,11 +50,29 @@ Ext.define("Cheers.controller.Main", {
             },
             myClunksList:{
 		itemsingletap: "myClunksListOption"
+            },
+            bump_yes:{
+		tap: "bump_yes"
+            },
+            bump_no:{
+		tap: "bump_no"
             }
             
              	 
         }
     },
+   bump_yes: function(){
+    window.bumpable('YES', function(result) {
+               console.log('bumpable set to no');
+              });
+   },
+   bump_no: function(){
+       
+       window.bumpable('NO', function(result) {
+               console.log('bumpable set to no');
+              });
+       //alert(1);
+   },
    myClunksListOption: function (list, record, item, e){
        alert(1);
        console.log(e);
@@ -174,14 +194,26 @@ Ext.define("Cheers.controller.Main", {
       }
       
       if (status == 'NO-MATCH'){
+          
+          BUMP_FAIL_COUNTER++
+          if (BUMP_FAIL_COUNTER> BUMP_FAIL_MAX){
+              BUMP_FAIL_COUNTER =0;
+              
+              Ext.Msg.alert('Bump', 'Please stop playing with yourself!!!')
+          }else{
           Ext.Msg.alert('Bump', 'Try again...')
+          }
+          
+      }
+      if(status == 'BUMP-DETECTED'){
+          Ext.Msg.alert('Bump', 'Searching...')
       }
        
       
     },
     //handles match and sending data to server for geolocation checking
     cheersSend: function(data){
-        
+        BUMP_FAIL_COUNTER = 0;
         BUMP_LOCKED = true;
         
         navigator.geolocation.getCurrentPosition(function(position){

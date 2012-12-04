@@ -23,7 +23,7 @@ Ext.define("Cheers.view.Main", {
                     xtype: 'titlebar',
                     docked: 'top',
                       items:[
-                              {
+                              /*{
                                 xtype: 'button',
                                 text: 'Sim-Match',
                                 id: 'sim_match'
@@ -35,6 +35,20 @@ Ext.define("Cheers.view.Main", {
                                 xtype: 'button',
                                 text: 'Sim-No-Match',
                                 id: 'sim_nomatch'
+
+                               },*/
+                               
+                               {
+                                xtype: 'button',
+                                text: 'Bumpable-NO',
+                                id: 'bump_no'
+
+                               },
+                               
+                               {
+                                xtype: 'button',
+                                text: 'Bumpable-YES',
+                                id: 'bump_yes'
 
                                }/*,
                               {

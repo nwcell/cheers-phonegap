@@ -5,7 +5,7 @@ require_once 'Zend/Db/Adapter/Mysqli.php';
 
 $db = new Zend_Db_Adapter_Mysqli(array(
                 'host'     =>"localhost",
-                'username' =>"cfcthain_cheers" ,
-                'password' => "cheers"  ,
-                'dbname'   => "cfcthain_cheers"));
+                'username' =>"nwcell_cheers" ,
+                'password' => "cheers16554"  ,
+                'dbname'   => "nwcell_cheers"));
  

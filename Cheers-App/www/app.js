@@ -49,7 +49,7 @@ Ext.application({
              
               //Bump Init here
              
-              result=  window.bump(USER_ID, function(echoValue) {
+              result=  window.bump(USER_ID, function(result) {
                console.log('bump init');
               });
               

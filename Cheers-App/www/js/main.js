@@ -1,10 +1,13 @@
-var API_URL     = 'http://cheers.phpwebbies.com';
+var API_URL     = 'http://api.cheers.im';
 var USER_ID     = window.localStorage.getItem("USER_ID");
 var BUMP_STATUS = '';
 var BUMP_LOCKED =    false;
 var BUMP_CONNECTED = false;
 var LAT;
 var LON;
+var FAILED_MESSAGE = 'You need to clunk with someone';
+var BUMP_FAIL_COUNTER = 0;
+var BUMP_FAIL_MAX = 3;
 
 document.addEventListener('deviceready', function() {
    try {
@@ -27,7 +30,13 @@ window.bump = function(str, callback) {
                  callback('');
                  }, "Bump", "bump", [str]);
 }; 
-     
+
+window.bumpable = function(str, callback) {
+    cordova.exec(callback, function(err) {
+                 callback('');
+                 }, "Bump", "bumpable", [str]);
+}; 
+
 
 function updateContent( data ) {
 
