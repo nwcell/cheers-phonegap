@@ -5,6 +5,7 @@ var BUMP_LOCKED =    false;
 var BUMP_CONNECTED = false;
 var LAT;
 var LON;
+var BP_ID = null;
 var FAILED_MESSAGE = 'You need to clunk with someone';
 var BUMP_FAIL_COUNTER = 0;
 var BUMP_FAIL_MAX = 3;

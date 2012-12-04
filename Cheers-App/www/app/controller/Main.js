@@ -89,11 +89,57 @@ Ext.define("Cheers.controller.Main", {
     
         Ext.Viewport.animateActiveItem(this.getMainPannel(), {type:'slide', direction:'right'});
     },
+    getBPLocation: function(){
+       //retrieves the BP_ID base on user lat lon
+       
+            navigator.geolocation.getCurrentPosition(function(position){
+                             
+                    Ext.Ajax.request({
+                            url: API_URL,
+                            async : false,
+                            params: {
+                            id: USER_ID,
+                            action: 'getBp',
+                            lat: position.coords.latitude,
+                            lon: position.coords.longitude,
+                            random: Math.random()
+                            },
+                            success: function(response, opts) {
+                                    
+                               //update BP_ID
+                            
+                            },
+                            failure: function(response, opts) {
+                                 
+                                 alert('Error::Initial Check ::  ' + response.responseText);					
+                            },
+                            beforerequest: function(){
+
+                            }
+                     });
+
+        }, function(){
+            Ext.Msg.alert('Cheers API','Connection error');
+            
+        });
+        
+    },
     ClunkmateShow: function(){
  
+        if (BP_ID = null ) this.getBPLocation();
+       //get points from bp
+     
        
+       //show the points
+       
+       
+       //show a button for bar tender to press
+       
+       //wait for a success message
+       
+       //if success is shown bar tender gives a drink
         
-       var Items = Ext.create('Ext.data.Store', {
+       /*var Items = Ext.create('Ext.data.Store', {
                 model: 'Cheers.model.Clunkmate',
                 sorterns: 'name',
                  grouper: {
@@ -114,7 +160,7 @@ Ext.define("Cheers.controller.Main", {
         
          console.log(Items);
         ClunkmateList =  Ext.getCmp("ClunkmateList");
-	ClunkmateList.setStore(Items); 
+	ClunkmateList.setStore(Items); */
         
      
     },

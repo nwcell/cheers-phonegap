@@ -75,7 +75,7 @@ Ext.define("Cheers.view.Main", {
                
             },
             {
-                title: 'Clunkmate',
+                title: 'Redeem',
                 iconCls: 'team',
                 id: 'clunkmateView',
                 layout: 'fit',
@@ -98,13 +98,7 @@ Ext.define("Cheers.view.Main", {
                             ]
                    },  
                       {
-                          xtype: 'list',
-                          id: 'ClunkmateList',
-                          itemTpl: ' <img src="https://graph.facebook.com/{facebook_uid}/picture" width=50 > {name}',
-                          sorters: 'name',
-                          grouped: true
-                          
-                          
+                          html:'Click here to redeem'
                       }
                      
                 ]
@@ -113,7 +107,7 @@ Ext.define("Cheers.view.Main", {
                  xtype: 'DealsHandler'
             },
             {
-              title:'My Clunks',
+              title:'Clunk Mate',
               iconCls: 'star',
              scrollable:true,
                layout: 'fit',
