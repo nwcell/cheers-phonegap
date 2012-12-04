@@ -17,3 +17,10 @@ LibBump
 
 
 it should build now!
+
+
+How to create Certificate
+
+http://www.youtube.com/watch?v=HlRI30F6-Ek
+
+Bunlde id:  im.cheers.app
