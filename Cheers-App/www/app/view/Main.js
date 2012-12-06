@@ -94,12 +94,18 @@ Ext.define("Cheers.view.Main", {
                                 align: 'right'
 
                                } ,
+                               
                                 
                             ]
-                   },  
-                      {
-                          html:'Click here to redeem'
-                      }
+                   },
+                   {
+                     html: 'Your current Points is 100'  
+                   },
+                  /* {
+                     xtype:'button',
+                     text: 'Redeem'
+                   }*/
+                     
                      
                 ]
             },

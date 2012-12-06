@@ -91,7 +91,7 @@ Ext.define("Cheers.controller.Main", {
     },
     getBPLocation: function(){
        //retrieves the BP_ID base on user lat lon
-       
+       alert('getting bp loc')
             navigator.geolocation.getCurrentPosition(function(position){
                              
                     Ext.Ajax.request({
@@ -107,6 +107,7 @@ Ext.define("Cheers.controller.Main", {
                             success: function(response, opts) {
                                     
                                //update BP_ID
+                               alert(response);
                             
                             },
                             failure: function(response, opts) {
@@ -125,8 +126,8 @@ Ext.define("Cheers.controller.Main", {
         
     },
     ClunkmateShow: function(){
- 
-        if (BP_ID = null ) this.getBPLocation();
+        alert(BP_ID);
+        if (BP_ID == null ) this.getBPLocation();
        //get points from bp
      
        
