@@ -28,11 +28,42 @@ if ($action == 'clunkmate'){
     exit;
 }
 
+
+if ($action == 'getBp'){
+    
+    $sql = "SELECT t1.id, t1.bid,  ( 3959 * acos( cos( radians(?) ) * cos( radians( t1.lat ) ) 
+            * cos( radians( t1.lon ) - radians(?) ) + sin( radians(?) ) * 
+            sin( radians( t1.lat ) ) ) ) AS distance, t2.name, t3.points, 
+            t3.last_update as last_clunked, t5.max_total_points , t5.cooldown,
+            t5.first_clunk_points , t5.normal_clunk_points 
+            FROM geodata t1 
+            INNER JOIN business t2 ON t1.bid = t2.id
+            LEFT JOIN  user_points t3 ON t1.bid = t3.bp_id AND t3.user_id = ?
+            LEFT JOIN clunks t4 on t3.user_id = t4.user_id 
+            LEFT JOIN bp_rules t5 ON t1.bid = t5.bid
+            GROUP BY t1.bid
+            HAVING  distance < $radius_check  LIMIT 1
+            ";
+    $rows = $db->fetchAll($sql, array($lat, $lon, $lat, $id));
+    
+    if (!$rows){
+        
+        $result['success'] =false;
+        
+        
+    }else{
+        
+        $result['success'] = true;
+        $result['data'] = $rows[0];
+     }
+    
+    echo json_encode($result);
+    exit;
+}
+
+
 //get business within the geo
 if ($action  == 'getgeo'){
-    
-    
-    
     
     $sql = "SELECT id, name,  ( 3959 * acos( cos( radians(?) ) * cos( radians( lat ) ) 
             * cos( radians( lng ) - radians(?) ) + sin( radians(?) ) * 
@@ -171,7 +202,7 @@ if ($action == 'match'){
 }
 
 if ($action == 'check' ){
-  echo 'version 0.1';
+  echo 'version 0.2';
   exit;
 }
 

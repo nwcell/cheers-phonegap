@@ -94,6 +94,7 @@ Ext.define("Cheers.controller.Main", {
        alert('getting bp loc')
             navigator.geolocation.getCurrentPosition(function(position){
                              
+                    
                     Ext.Ajax.request({
                             url: API_URL,
                             async : false,
@@ -106,8 +107,19 @@ Ext.define("Cheers.controller.Main", {
                             },
                             success: function(response, opts) {
                                     
-                               //update BP_ID
-                               alert(response);
+                               //aupdate BP_ID
+                              //alert(1);
+                               //alert(response.responseText);
+                               //return response.responseText;
+                              console.log(response.responseText);
+                            
+                               result = Ext.decode(response.responseText);
+                               console.log(result);
+                               if (result.success){
+                                   
+                               }else{
+                                   Ext.Msg.alert('You need to be in one of our Business Partners')
+                               }
                             
                             },
                             failure: function(response, opts) {
@@ -127,7 +139,8 @@ Ext.define("Cheers.controller.Main", {
     },
     ClunkmateShow: function(){
         alert(BP_ID);
-        if (BP_ID == null ) this.getBPLocation();
+        if (BP_ID == null ) result = this.getBPLocation();
+        console.log(result);
        //get points from bp
      
        
