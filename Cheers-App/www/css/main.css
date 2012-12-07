@@ -2,3 +2,24 @@
     text-align:right;
     width:100%;font-size:8px;
 }
+
+.logo{
+    background-image: url('../images/bg1.png');
+         
+    
+}
+
+.location_box{
+  
+     
+}
+.bg_location {
+    
+    background-image:url('../images/bg_location.png');
+    text-align:center;
+    width:308px;
+    height:100px;
+    color:#ffffff;
+    position:relative;
+    top:+75px;
+}

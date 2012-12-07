@@ -10,7 +10,10 @@ Ext.define("Cheers.view.Main", {
 
         items: [
             {
-                title: 'Home',
+              xtype: 'ClunkType'  
+            },
+           /* {
+                title: 'Clunk',
                 iconCls: 'home',
                 id: 'home',
 
@@ -23,7 +26,7 @@ Ext.define("Cheers.view.Main", {
                     xtype: 'titlebar',
                     docked: 'top',
                       items:[
-                              /*{
+                              {
                                 xtype: 'button',
                                 text: 'Sim-Match',
                                 id: 'sim_match'
@@ -36,7 +39,7 @@ Ext.define("Cheers.view.Main", {
                                 text: 'Sim-No-Match',
                                 id: 'sim_nomatch'
 
-                               },*/
+                               },
                                
                                {
                                 xtype: 'button',
@@ -50,7 +53,7 @@ Ext.define("Cheers.view.Main", {
                                 text: 'Bumpable-YES',
                                 id: 'bump_yes'
 
-                               }/*,
+                               } ,
                               {
                                 xtype: 'button',
                                 iconCls: 'refresh',
@@ -58,7 +61,7 @@ Ext.define("Cheers.view.Main", {
                                 align: 'right',
                                 id: 'refresh'
 
-                               } */
+                               }  
                             ]
                    },
                    {
@@ -73,7 +76,8 @@ Ext.define("Cheers.view.Main", {
                     
                ]
                
-            },
+            },*/
+            /*
             {
                 title: 'Redeem',
                 iconCls: 'team',
@@ -101,20 +105,18 @@ Ext.define("Cheers.view.Main", {
                    {
                      html: 'Your current Points is 100'  
                    },
-                  /* {
+                    {
                      xtype:'button',
                      text: 'Redeem'
-                   }*/
+                   } 
                      
                      
                 ]
-            },
+            },*/
+            
             {
-                 xtype: 'DealsHandler'
-            },
-            {
-              title:'Clunk Mate',
-              iconCls: 'star',
+              title:'Friends',
+              iconCls: 'team',
              scrollable:true,
                layout: 'fit',
                id: 'Clunks',
@@ -137,10 +139,50 @@ Ext.define("Cheers.view.Main", {
              ]
 
           
-     },
+          },
+          {
+                 xtype: 'DealsHandler'
+            },
+            
+            
+            {
+                title: 'History',
+                iconCls: 'star',
+                id: 'clunkmateView',
+                layout: 'fit',
+                scrollable:true,
+                items: [
+                     {
+                    title: '',
+                    xtype: 'titlebar',
+                    docked: 'top',
+                      items:[
+                               
+                               {
+                                xtype: 'button',
+                                text: 'Clunkmate Request',
+                                id: 'clunkmate_request',
+                                align: 'right'
+
+                               } ,
+                               
+                                
+                            ]
+                   },
+                   {
+                     html: 'Your current Points is 100'  
+                   },
+                    {
+                     xtype:'button',
+                     text: 'Redeem'
+                   } 
+                     
+                     
+                ]
+            },
              {
-                title: 'Account',
-                iconCls: 'user',
+                title: 'Settings',
+                iconCls: 'settings',
 
                 items: [
                     {

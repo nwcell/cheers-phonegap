@@ -3,7 +3,7 @@ Ext.application({
         'Cheers.view.override.Map'
     ],
     name: 'Cheers',
-    views: ['Main','Clunks','DealsHandler'],
+    views: ['Main','Clunks','DealsHandler','Clunk'],
     //'Deals','Map'
     controllers: ['Main'],
     models: ['Clunks','Deal'],
@@ -12,7 +12,11 @@ Ext.application({
 
     launch: function() {
          
-      
+       /*if( window.devicePixelRatio >= 2 ){
+        alert( "Hi Res @ Pixel Ratio : " + window.devicePixelRatio + " &amp; Size : " + screen.width * window.devicePixelRatio);
+    }else{
+        alert( "Normal @ Pixel Ratio 1 &amp; Size : " + screen.width + "+" + screen.width);
+    }*/
       
         // alert(1);
         // return false;
