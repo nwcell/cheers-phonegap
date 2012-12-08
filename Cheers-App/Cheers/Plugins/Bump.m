@@ -67,10 +67,10 @@
     NSString* status = [command.arguments objectAtIndex:0];
 
     if ([status isEqualToString:@"NO"]){
-     [BumpClient sharedClient].bumpable = NO;
+     //[BumpClient sharedClient].bumpable = NO;
         NSLog(@"not bumpable");
     }else{
-        [BumpClient sharedClient].bumpable = YES;
+       // [BumpClient sharedClient].bumpable = YES;
         NSLog(@"yes bumpable");
 
     }
@@ -79,8 +79,8 @@
 }
 
 - (void) bumpNoMatch {
-    
-    [BumpClient sharedClient].bumpable = YES;
+   
+   // [BumpClient sharedClient].bumpable = YES;
 
     
     NSLog(@"NO-MATCH");
@@ -90,7 +90,7 @@
 
 - (void) bumpDetected {
    
-    [BumpClient sharedClient].bumpable = NO;
+   // [BumpClient sharedClient].bumpable = NO;
     
     NSLog(@"BUMP-DETECTED");
     NSString *js = [NSString stringWithFormat:@"updateContent( '%@' );", @"BUMP-DETECTED"];

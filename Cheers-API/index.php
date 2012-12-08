@@ -53,6 +53,8 @@ if ($action == 'getBp'){
         
     }else{
         
+        $rows[0]['rank'] = 'Alpha Elite';
+        $rows[0]['badges'] = array('Bender','Entourage','Player');
         $result['success'] = true;
         $result['data'] = $rows[0];
      }
@@ -139,9 +141,15 @@ if ($action == 'match'){
     
     if($rows){ 
        
+        $result['clunk_with'] = $clunk_with['first_name']. ' '. $clunk_with['last_name'];
+        $result['bid'] = $rows[0]['bid'];
+         
         if( !is_numeric($rows[0]['distance']) ){
-             echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
-            echo 'Sorry, we cannot determine your location';
+            // echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
+            $rows['success'] = false;
+            $rows['reason']  = 'Sorry, we cannot determine your location';
+            
+            
             
         }elseif ($rows[0]['distance'] < $radius_check){
            
@@ -157,9 +165,11 @@ if ($action == 'match'){
           //  echo 'last hour clunked = '.$hour_last_clunked;
             
             if ($rows[0]['cooldown'] > $hour_last_clunked) {
+                $rows['success'] = false;
                 $add_points = false;
                 $no_points_reason = 'Need to wait '.( round($rows[0]['cooldown'] - $hour_last_clunked,0)) . ' hour(s) until you can clunked again!';
-                 
+                $rows['reason'] = $no_points_reason; 
+                
             }
             
             if ($rows[0]['last_clunked'] == '') {
@@ -168,20 +178,33 @@ if ($action == 'match'){
             
              if ($rows[0]['points'] >=  $rows[0]['max_total_points']) {
                  $add_points = false;
+                 $rows['success'] = false;
                  $no_points_reason = 'You have reached the maximum points, redeem it now for a free drink! ';
+                 $rows['reason'] = $no_points_reason; 
             }
             
             
             
-             echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
+            // echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
+             
              
              if (!$add_points){
-                  echo 'Sorry no points added for '.$rows[0]['name']. '<br> Your Points still the same : '.( intval($rows[0]['points'])   );
-                  echo  '<br>'.$no_points_reason;
+                 // echo 'Sorry no points added for '.$rows[0]['name']. '<br> Your Points still the same : '.( intval($rows[0]['points'])   );
+                 // echo  '<br>'.$no_points_reason;
+                  
+                   $result['success'] = false;
+                   $result['reason'] = $no_points_reason;
              }else{
              
-              echo 'Points added for '.$rows[0]['name']. '<br> Your Points now : '.( intval($rows[0]['points']) + $points_to_add  );
-              echo ' You gained '. $points_to_add;
+             // echo 'Points added for '.$rows[0]['name']. '<br> Your Points now : '.( intval($rows[0]['points']) + $points_to_add  );
+             // echo ' You gained '. $points_to_add;
+              
+              $result['success'] = true;
+              $result['points_gain'] = $points_to_add;
+              
+              $result['points'] = intval($rows[0]['points']) + $points_to_add;
+              $result['bid'] = $rows[0]['bid'];
+               
                 //add points here
                 $sql ="INSERT INTO user_points (bp_id, user_id , points) VALUES (? , ? , ?)
                         ON DUPLICATE KEY UPDATE points = points + ?";
@@ -189,14 +212,17 @@ if ($action == 'match'){
              }
 
         }else{
-             echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
-             echo 'Sorry the nearest Cheers deal is at "'.$rows[0]['name'].'" which is '.$rows[0]['distance']. ' miles away. Click Find deals to know more.';
-          
+            // echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
+              
+             $result['success'] = false;
+             $result['reason'] = 'Sorry the nearest Cheers deal is at "'.$rows[0]['name'].'" which is '.$rows[0]['distance']. ' miles away. Click Find deals to know more.';
         }
     }else{
-         echo 'Error';
+         $result['success'] = false;
+         $result['reason'] = 'Error';
     }
     
+    echo json_encode($result);
     exit;
     
 }
@@ -220,7 +246,11 @@ if ($action =='fblogin'){
                 $facebook_uid = $fb_details['id'];
                 $first_name   = $fb_details['first_name'];
                 $last_name    = $fb_details['last_name'];
+                if($fb_details['photo_url']){
                 $photo        = $fb_details['photo_url'];
+                }else{
+                 $photo  = '';
+                }
 
                 //check if user already exist
                 $sql = "SELECT * FROM login WHERE facebook_uid = ? LIMIT 1";

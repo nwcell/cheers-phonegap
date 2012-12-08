@@ -4,7 +4,7 @@
 }
 
 .logo{
-    background-image: url('../images/bg1.png');
+    background-image: url('../images/background_main2.png');
          
     
 }
@@ -15,11 +15,116 @@
 }
 .bg_location {
     
-    background-image:url('../images/bg_location.png');
+    background-image:url('../images/bg_location.gif');
     text-align:center;
-    width:308px;
+    width:320px;
     height:100px;
     color:#ffffff;
-    position:relative;
-    top:+75px;
+    position:absolute;
+    top:+55px;
+}
+
+.bg_points {
+    
+    background-image:url('../images/points_bg.png');
+    text-align:left;
+    width:320px;
+    height:121px;
+    color:#ffffff;
+    position:absolute;
+    top:+158px;
+     
+    
+}
+
+.bg_status {
+    
+    background-image:url('../images/status_bg.png');
+    text-align:center;
+    width:320px;
+    height:40px;
+    color:#ffffff;
+    position:absolute;
+    top:+283px;
+   
+    
+    
+}
+
+.bg_badges {
+    
+    background-image:url('../images/badges_bg.png');
+    text-align:center;
+    width:320px;
+    height:65px;
+    color:#ffffff;
+    position:absolute;
+    top:+325px;
+    
+}
+
+.location_name{
+    position: absolute;
+    top: +80px;
+    text-align: center;
+    color:#ffffff;
+    width:320px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.bugreport_cls{
+    position:absolute;
+    top:120px;
+    left:+20px;
+    color:#3397b9;
+    width:320px;
+    
+   
+}
+
+.points_cls{
+   position: absolute;
+   top: +220px;
+   left:+20px;
+   color:#ffffff;
+   
+}
+.pointsbar_cls{
+   position: absolute;
+   top: +176px;
+   left:+20px;    
+   
+}
+.pointstimer_cls{
+    position:absolute;
+    top:185px;
+    left:+255px;
+    
+    
+}
+.statustext_cls{
+    position:absolute;
+    top:290px;
+    color:#ffffff;
+    width:320px;
+    left:+20px;
+    
+     
+}
+.badgetext_cls{
+    position:absolute;
+    top:345px;
+    text-align: center;
+    color:#ffffff;
+    width:320px;
+   
+}
+.sim_match{
+    top:390px;
+    position:absolute;
+}
+
+.hidden{
+    visibility: hidden;
 }

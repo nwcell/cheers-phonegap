@@ -9,6 +9,10 @@ var BP_ID = null;
 var FAILED_MESSAGE = 'You need to clunk with someone';
 var BUMP_FAIL_COUNTER = 0;
 var BUMP_FAIL_MAX = 3;
+var DEBUG = false;
+var DEBUG_LAT = "61.218544" ;
+var DEBUG_LAT = "161.218544" ;
+var DEBUG_LON = "-149.877151";
 
 document.addEventListener('deviceready', function() {
    try {
@@ -47,16 +51,17 @@ function updateContent( data ) {
 
 function cheersSend(data){
 
+    console.log('bump with= '+ data +' BUMP locked ='+ BUMP_LOCKED);
     //prevents from doing another match
     if (BUMP_LOCKED) return false;
 
     //fix for my android id, don't want to update my android binary this time
-    if (data == 'Bump User') data = 4;
+    //if (data == 'Bump User') data = 4;
     
-    if (data == 'INIT' || !is_numeric(data)) return false;
+    //if (data == 'INIT' || !is_numeric(data)) return false;
     
     
-
+    console.log('got here 63')
     Cheers.app.getControllerInstances()['Cheers.controller.Main'].cheersSend(data);
 }
 

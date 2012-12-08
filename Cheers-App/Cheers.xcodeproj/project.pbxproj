@@ -30,7 +30,6 @@
 		305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */; };
 		3072F99713A8081B00425683 /* Capture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3072F99613A8081B00425683 /* Capture.bundle */; };
 		3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBB7154F3926009F9C59 /* Default-Landscape@2x~ipad.png */; };
-		3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBB8154F3926009F9C59 /* Default-Landscape~ipad.png */; };
 		3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBB9154F3926009F9C59 /* Default-Portrait@2x~ipad.png */; };
 		3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBBA154F3926009F9C59 /* Default-Portrait~ipad.png */; };
 		3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBBB154F3926009F9C59 /* Default@2x~iphone.png */; };
@@ -45,9 +44,9 @@
 		D300AD01164BFEB60047A6CD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD00164BFEB60047A6CD /* FacebookSDK.framework */; };
 		D300AD03164BFEDD0047A6CD /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D300AD02164BFEDD0047A6CD /* FacebookSDKResources.bundle */; };
 		D300AD27164BFF000047A6CD /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = D300AD26164BFF000047A6CD /* FacebookConnectPlugin.m */; };
-		D300AD29164BFF2E0047A6CD /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD28164BFF2E0047A6CD /* Accounts.framework */; };
-		D300AD2B164BFF340047A6CD /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD2A164BFF340047A6CD /* Social.framework */; };
-		D300AD2D164BFF370047A6CD /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD2C164BFF370047A6CD /* AdSupport.framework */; };
+		D300AD29164BFF2E0047A6CD /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD28164BFF2E0047A6CD /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D300AD2B164BFF340047A6CD /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD2A164BFF340047A6CD /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D300AD2D164BFF370047A6CD /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD2C164BFF370047A6CD /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D300AD35164C025C0047A6CD /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD31164C025C0047A6CD /* libc++.1.dylib */; };
 		D300AD36164C025C0047A6CD /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD32164C025C0047A6CD /* libc++.dylib */; };
 		D300AD37164C025C0047A6CD /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D300AD33164C025C0047A6CD /* libc++abi.dylib */; };
@@ -520,7 +519,6 @@
 				30A0434814DC770100060A13 /* Localizable.strings in Resources */,
 				30A0434914DC770100060A13 /* Localizable.strings in Resources */,
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
-				3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */,
 				3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */,
 				3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */,
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
@@ -626,7 +624,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Cheers/Cheers-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/Volumes/USB 1/libBump\"",
@@ -647,7 +645,7 @@
 					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = Cheers;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -669,7 +667,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Cheers/Cheers-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/Volumes/USB 1/libBump\"",
@@ -692,7 +690,7 @@
 				PRODUCT_NAME = Cheers;
 				PROVISIONING_PROFILE = "5E7F4EA9-3F91-4C0C-AE1A-F09553098864";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5E7F4EA9-3F91-4C0C-AE1A-F09553098864";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

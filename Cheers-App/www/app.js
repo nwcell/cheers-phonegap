@@ -12,23 +12,26 @@ Ext.application({
 
     launch: function() {
          
-       /*if( window.devicePixelRatio >= 2 ){
+       /*TODO
+        *Check for Iphone resolution
+        *
+        *if( window.devicePixelRatio >= 2 ){
         alert( "Hi Res @ Pixel Ratio : " + window.devicePixelRatio + " &amp; Size : " + screen.width * window.devicePixelRatio);
-    }else{
+       }else{
         alert( "Normal @ Pixel Ratio 1 &amp; Size : " + screen.width + "+" + screen.width);
-    }*/
+       }*/
       
-        // alert(1);
-        // return false;
+         
+        
         if ( Ext.browser.is.Chrome) {
-            //debug mode
-            USER_ID = 5;
-            alert(USER_ID);
+        //debug mode
+         USER_ID = 5;
+            
             if (!this.Main) this.Main = Ext.create('Cheers.view.Main');
             
             console.log('this main==>'+ this.Main);
              Ext.Viewport.add([ this.Main]);
-             
+             DEBUG = true;
              LAT = 61.198002;
              LON = -149.878998;
             
