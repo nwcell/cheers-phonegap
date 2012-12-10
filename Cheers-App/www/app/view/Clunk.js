@@ -73,11 +73,11 @@ Ext.define('Cheers.view.Clunk', {
                 id: 'badgetext',
                 cls:'badgetext_cls'
             },
-            {
-               html:'Refresh'
+            /*{
+               html:'Refresh',
                id: 'refresh_location'
                
-            }
+            }*/
             /*{
               xtype:'button',
               text: 'sim-match',
