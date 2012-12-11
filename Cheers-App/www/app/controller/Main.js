@@ -22,8 +22,12 @@ Ext.define("Cheers.controller.Main", {
             bump_no:        "#bump_no",
             clunkView:      "#clunkView",
              
+            
+             
         },
         control: {
+            
+            
             clunkView: {
               painted: "clunkViewUpdate"  
             },
@@ -65,7 +69,16 @@ Ext.define("Cheers.controller.Main", {
              	 
         }
     },
-   clunkViewUpdate: function(){
+   clunkViewTap: function(){
+     alert(1);  
+   },
+   refresh_location: function(){
+     alert(1);  
+   },
+   clunkRefresh: function(){
+       
+        refresh_location = Ext.getCmp("refresh_location");
+       refresh_location.addCls('hidden');
        
         location_text = Ext.getCmp("location_text");
         location_text.setHtml('<div style="font-size:16px">Checking your location...</div>')
@@ -95,7 +108,200 @@ Ext.define("Cheers.controller.Main", {
         bugreport = Ext.getCmp("bugreport");
         bugreport.addCls('hidden');
         
+         setTimeout(function() {
+        // do your work here
         
+        navigator.geolocation.getCurrentPosition(function(position){
+                             
+                    lat = position.coords.latitude;
+                    lon = position.coords.longitude;
+                    
+                    if (DEBUG){
+                        lat = DEBUG_LAT;
+                        lon = DEBUG_LON;
+                    }
+                    Ext.Ajax.request({
+                            url: API_URL,
+                            async : false,
+                            params: {
+                            id: USER_ID,
+                            action: 'getBp',
+                            lat: lat,
+                            lon: lon,
+                            random: Math.random()
+                            },
+                            success: function(response, opts) {
+                                    
+                               //aupdate BP_ID
+                              //alert(1);
+                               //alert(response.responseText);
+                               //return response.responseText;
+                                console.log(response.responseText);
+                            
+                               
+                               
+                               result = Ext.decode(response.responseText);
+                               console.log(result);
+                               if (result.success){
+                                   
+                                   //update the Current BP_ID;
+                                   BP_ID = result.data.bid;
+                               
+                                   //document.getElementById("bg_points").visibility = 'visibile';
+                                   //
+                                   //
+                                   //do stuff here
+                                   console.log(result.data.name);
+                                   location_text = Ext.getCmp("location_text");
+                                   console.log(location_text);
+                                   location_text.setHtml(result.data.name);
+                                   
+                                   
+                                  //  Ext.fly('bg_points').setStyle('visibility', 'visible');
+                                   //bg_points.setStyle
+                                   
+                                  // console.log(Ext.get('bg_points'));
+                                 // console.log('get visible');
+                                  //document.getElementById("bg_points").style.visibility='visible';
+                                  
+                                  
+                                  
+                                  points_remaining = 100 -result.data.points;
+                                  
+                                  
+                                   points_text.setHtml(points_remaining+ ' Points towards a free <br> beer at '+ result.data.name)
+                                   points_text.removeCls('hidden');
+                                   
+                                   pointsbar = Ext.getCmp("pointsbar");
+                                   
+                                   pointsbar_length = (result.data.points/100)* 220;
+                                   //alert(pointsbar_length); 
+                                   
+                                   pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538"></div>');
+                                   
+                                   statustext = Ext.getCmp("statustext");
+                                   
+                                   //rank = 'Alpha Elite';
+                                   statustext.setHtml('Your rank - '+ result.data.rank);
+                                   
+                                   badges = result.data.badges;
+                                   var badgeresult ='';
+                                   for(i = 0; i< badges.length;i++){
+                                       badgeresult = badgeresult +' *'+ badges[i];
+                                   }
+                                   badgetext = Ext.getCmp("badgetext");
+                                   badgetext.setHtml(badgeresult);
+                                   
+                                                                     
+                                   bgpoints.removeCls('hidden');                                  
+                                   pointsbar.removeCls('hidden');                                  
+                                   bgstatus.removeCls('hidden');                                 
+                                   statustext.removeCls('hidden');                                   
+                                   bgbadges.removeCls('hidden');                                   
+                                   badgetext.removeCls('hidden');
+                                   bugreport.removeCls('hidden');
+                                   
+                               }else{
+                                  // Ext.Msg.alert('You need to be in one of our Business Partners')
+                                   
+                                   location_text.setHtml('Unknown Place');
+                                   refresh_location = Ext.getCmp("refresh_location");
+                                   refresh_location.removeCls('hidden');
+                               }
+                            
+                            },
+                            failure: function(response, opts) {
+                                 
+                                 //alert('Error::Initial Check ::  ' + response.responseText);	
+                                 
+                                 
+                            },
+                            beforerequest: function(){
+
+                            }
+                     });
+
+        }, function(){
+             location_text.setHtml('<span style="font-size:15px">No internet/GPS </span>');
+             refresh_location = Ext.getCmp("refresh_location");
+             refresh_location.removeCls('hidden');
+            //Ext.Msg.alert('Cheers API','Connection error');
+            
+        });
+      }, 300);
+       
+   },
+   bugReport: function(){
+    if (!this.Report) this.Report = Ext.create('Cheers.view.Report');
+        Ext.Viewport.setActiveItem(this.Report);
+   
+   },
+   clunkViewUpdate: function(panel){
+        // alert(panel);
+         clunkRefresh = this.clunkRefresh();
+         
+         var el = panel.element;
+         console.log('painted ');
+         el.on('tap', function(e,t){
+             console.log('tapped');
+             var span = e.getTarget('span');
+             if (span){
+                 console.log(span);
+                 console.log('result= '+ t.id + ' '+ e);
+                 if (t.id == 'refresh_id'){
+                    
+                    //Ext.Msg.alert('','Refreshing');
+                    Cheers.app.getControllerInstances()['Cheers.controller.Main'].clunkRefresh();
+                 }
+                 if (t.id == 'bug_report'){
+                    Cheers.app.getControllerInstances()['Cheers.controller.Main'].bugReport();
+                 }
+             }
+         }, panel);
+         
+       
+       clunkability = Ext.getCmp("clunkability");
+       clunkability.addCls('hidden');
+       
+       pointsbardisabled = Ext.getCmp("pointsbardisabled");
+       pointsbardisabled.addCls('hidden');
+        
+       refresh_location = Ext.getCmp("refresh_location");
+       refresh_location.addCls('hidden');
+       
+       refresh_location = Ext.getCmp("refresh_location");
+       refresh_location.addCls('hidden');
+       
+        location_text = Ext.getCmp("location_text");
+        location_text.setHtml('<div style="font-size:16px">Checking your location...</div>')
+     
+        points_text = Ext.getCmp("points_text");
+        points_text.addCls('hidden');
+        
+        bgpoints = Ext.getCmp("bgpoints");
+        bgpoints.addCls('hidden');
+        
+        pointsbar = Ext.getCmp("pointsbar");
+        pointsbar.addCls('hidden');
+        
+        bgstatus = Ext.getCmp("bgstatus");
+        bgstatus.addCls('hidden');
+        
+        
+        statustext = Ext.getCmp("statustext");
+        statustext.addCls('hidden');
+        
+        bgbadges = Ext.getCmp("bgbadges");
+        bgbadges.addCls('hidden');
+        
+        badgetext = Ext.getCmp("badgetext");
+        badgetext.addCls('hidden');
+        
+        bugreport = Ext.getCmp("bugreport");
+        bugreport.addCls('hidden');
+        
+        this.clunkRefresh();
+        return true;
      setTimeout(function() {
         // do your work here
         
@@ -403,13 +609,22 @@ Ext.define("Cheers.controller.Main", {
       if (status == 'CONNECTED'){
           BUMP_CONNECTED = true;
          // Ext.getCmp('bumpStatusText').setHtml('<div style="color:green">Connected</div>');
-         Ext.Msg.alert('Bump', 'Connected...')
+        // Ext.Msg.alert('Bump', 'Connected...')
+         
+       
+       clunkability.addCls('hidden');            
+       pointsbardisabled.addCls('hidden');
+       points_text.setHtml('Ready to clunk.')
+         
       }
       if (status == 'DISCONNECTED'){
           BUMP_CONNECTED = false;
           //Ext.getCmp('bumpStatusText').setHtml('checking network connection');
         // alert('disconnected');
-        Ext.Msg.alert('', 'Disconnected...')
+       // Ext.Msg.alert('', 'Disconnected...')
+         points_text.setHtml('waiting for connection....')
+       clunkability.removeCls('hidden');            
+       pointsbardisabled.removeCls('hidden');
       }
       
       if (status == 'NO-MATCH'){

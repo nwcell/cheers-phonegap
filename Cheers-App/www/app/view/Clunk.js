@@ -25,7 +25,7 @@ Ext.define('Cheers.view.Clunk', {
                 cls: 'location_name'
             },
             {
-                html: '<div>Not your location</div>',
+                html: '<span id="bug_report">Not your location</span>',
                 id: 'bugreport',
                 cls: 'bugreport_cls'
             },
@@ -43,6 +43,11 @@ Ext.define('Cheers.view.Clunk', {
                 html:'<div style="height:25px;width:1px;background-color:#b25538"></div>',
                 id: 'pointsbar',
                 cls: 'pointsbar_cls'
+            },
+            {
+                html:'<div style="height:25px;width:220px;background-color:gray"></div>',
+                id: 'pointsbardisabled',
+                cls: 'pointsbardisabled_cls'
             },
              
             {
@@ -73,11 +78,27 @@ Ext.define('Cheers.view.Clunk', {
                 id: 'badgetext',
                 cls:'badgetext_cls'
             },
-            /*{
-               html:'Refresh',
-               id: 'refresh_location'
+            {
+                html:'no connection',
+                id:'clunkability',
+                cls:'clunkability_cls'
+            },
+            {
+           html:'<span class="refresh" id="refresh_id">Check location again</span>',  
+               cls: 'refresh_cls',               
+               id: 'refresh_location',
+              /* listeners:[
+                {
+                    element: 'element',
+                    delegate: 'span.refresh',
+                    event:'tap',
+                    fn: function(){
+                       this.fireEvent('clunkViewUpdate');
+                    }
+                }
+               ]*/
                
-            }*/
+            }
             /*{
               xtype:'button',
               text: 'sim-match',

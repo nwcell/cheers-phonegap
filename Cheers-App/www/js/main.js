@@ -9,10 +9,10 @@ var BP_ID = null;
 var FAILED_MESSAGE = 'You need to clunk with someone';
 var BUMP_FAIL_COUNTER = 0;
 var BUMP_FAIL_MAX = 3;
-var DEBUG = false;
-var DEBUG_LAT = "61.218544" ;
-var DEBUG_LAT = "161.218544" ;
-var DEBUG_LON = "-149.877151";
+var DEBUG = true;
+var DEBUG_LAT = "37.785835" ;
+//var DEBUG_LAT = "161.218544" ;
+var DEBUG_LON = "-122.406418";
 
 document.addEventListener('deviceready', function() {
    try {

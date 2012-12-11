@@ -96,6 +96,12 @@
    left:+20px;    
    
 }
+.pointsbardisabled_cls{
+   position: absolute;
+   top: +176px;
+   left:+20px;    
+   
+}
 .pointstimer_cls{
     position:absolute;
     top:185px;
@@ -128,3 +134,26 @@
 .hidden{
     visibility: hidden;
 }
+
+.refresh_cls{
+   
+    position:absolute;
+    top:180px;
+    text-align: center;
+    color:#ffffff;
+    width:320px;
+      
+
+}
+
+.clunkability_cls{
+ 
+     position:absolute;
+    top:40px;
+    left:190px;
+    font-size:15px;
+    color:#ffffff;
+    width:320px;
+    color:red;
+}
+
