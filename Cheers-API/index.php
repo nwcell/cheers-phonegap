@@ -57,10 +57,15 @@ if ($action == 'getBp'){
             LEFT JOIN clunks t4 on t3.user_id = t4.user_id 
             LEFT JOIN bp_rules t5 ON t1.bid = t5.bid
             GROUP BY t1.bid
-            HAVING  distance < $radius_check  LIMIT 1
+            
+            HAVING  distance < $radius_check
+            ORDER BY distance    
+            LIMIT 1
+            
             ";
     $rows = $db->fetchAll($sql, array($lat, $lon, $lat, $id));
     
+   // print_r($rows);
     if (!$rows){
         
         $result['success'] =false;

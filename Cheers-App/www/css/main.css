@@ -37,6 +37,18 @@
     
 }
 
+.bg_redeem {
+    
+    background-image:url('../images/redeem_bg.gif');
+    text-align:left;
+    width:320px;
+    height:121px;
+    color:#ffffff;
+    position:absolute;
+    top:+158px;
+     
+    
+}
 .bg_status {
     
     background-image:url('../images/status_bg.png');

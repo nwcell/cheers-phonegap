@@ -15,7 +15,22 @@ var DEBUG_LAT = "37.785835" ;
 var DEBUG_LON = "-122.406418";
 var LOCATION_NAME = 'Unknown';
 var DEBUG_BUMP_WITH = 5;
+var MAX_TOTAL_POINTS = 100;
 
+DEBUG = window.localStorage.getItem("DEBUG");
+LOCATION_NAME = window.localStorage.getItem("LOCATION_NAME");
+DEBUG_BUMP_WITH = window.localStorage.getItem("DEBUG_BUMP_WITH");
+
+
+DEBUG_LAT = window.localStorage.getItem("DEBUG_LAT");
+DEBUG_LON = window.localStorage.getItem("DEBUG_LON");
+
+if(DEBUG_BUMP_WITH == null) DEBUG_BUMP_WITH = 2;
+if(DEBUG_LAT == null) DEBUG_LAT = "37.785835" ;
+if(DEBUG_LON == null) DEBUG_LON = "161.218544" ;
+if(DEBUG == null) DEBUG = false;
+
+//alert('is debug ' + DEBUG);
 document.addEventListener('deviceready', function() {
    try {
 

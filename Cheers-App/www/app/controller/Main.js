@@ -82,9 +82,21 @@ Ext.define("Cheers.controller.Main", {
         }
     },
    debugUpdate: function(){
-     alert('updating debug details');
-     debugOn = Ext.getCmp("debugOn");
-     alert(debugOn.getValue());
+     //alert('updating debug details');
+     DEBUG = Ext.getCmp("debugOn").getValue();
+     DEBUG_BUMP_WITH = Ext.getCmp("debugBumpWith").getValue();
+     DEBUG_LAT = Ext.getCmp("debugLat").getValue();
+     DEBUG_LON = Ext.getCmp("debugLon").getValue();
+     
+      localStorage.setItem("DEBUG", DEBUG);
+      localStorage.setItem("DEBUG_BUMP_WITH", DEBUG_BUMP_WITH);
+      localStorage.setItem("DEBUG_LAT", DEBUG_LAT);
+      localStorage.setItem("DEBUG_LON", DEBUG_LON);
+       
+      
+     //alert(DEBUG +" "+ DEBUG_BUMP_WITH+ " "+DEBUG_LAT + " "+ DEBUG_LON);
+     Ext.Msg.alert("Debug settings saved.")
+     
    },
    submitReport: function(){
      //alert('wee'); 
@@ -181,8 +193,10 @@ Ext.define("Cheers.controller.Main", {
                              
                     lat = position.coords.latitude;
                     lon = position.coords.longitude;
-                    
+                    console.log('DEBUG = '+DEBUG);
+                    //alert('DEBUG == '
                     if (DEBUG){
+                        
                         lat = DEBUG_LAT;
                         lon = DEBUG_LON;
                     }
@@ -231,8 +245,8 @@ Ext.define("Cheers.controller.Main", {
                                   //document.getElementById("bg_points").style.visibility='visible';
                                   
                                   
-                                  
-                                  points_remaining = 100 -result.data.points;
+                                  MAX_TOTAL_POINTS = result.data.max_total_points;
+                                  points_remaining = result.data.max_total_points -result.data.points;
                                   
                                   
                                    points_text.setHtml(points_remaining+ ' Points towards a free <br> beer at '+ result.data.name)
@@ -240,7 +254,7 @@ Ext.define("Cheers.controller.Main", {
                                    
                                    pointsbar = Ext.getCmp("pointsbar");
                                    
-                                   pointsbar_length = (result.data.points/100)* 220;
+                                   pointsbar_length = (result.data.points/result.data.max_total_points)* 220;
                                    //alert(pointsbar_length); 
                                    
                                    pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538"></div>');
@@ -273,6 +287,8 @@ Ext.define("Cheers.controller.Main", {
                                    location_text.setHtml('Unknown Place');
                                    refresh_location = Ext.getCmp("refresh_location");
                                    refresh_location.removeCls('hidden');
+                                   
+                                   bugreport.removeCls('hidden');
                                }
                             
                             },
@@ -435,15 +451,15 @@ Ext.define("Cheers.controller.Main", {
                                   
                                   
                                   
-                                  points_remaining = 100 -result.data.points;
+                                  points_remaining = result.data.max_total_points -result.data.points;
                                   
-                                  
+                                  //alert(points_remaining);
                                    points_text.setHtml(points_remaining+ ' Points towards a free <br> beer at '+ result.data.name)
                                    points_text.removeCls('hidden');
                                    
                                    pointsbar = Ext.getCmp("pointsbar");
                                    
-                                   pointsbar_length = (result.data.points/100)* 220;
+                                   pointsbar_length = (result.data.points/result.data.max_total_points)* 220;
                                    //alert(pointsbar_length); 
                                    
                                    pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538"></div>');
@@ -670,7 +686,15 @@ Ext.define("Cheers.controller.Main", {
         
     },
     setBumpStatusMatch: function(){
-      cheersSend(2);
+        
+       this.bumpStatus('BUMP-DETECTED'); 
+       setTimeout(function() {
+           
+       
+         Cheers.app.getControllerInstances()['Cheers.controller.Main'].cheersSend(DEBUG_BUMP_WITH);
+       } ,400);
+       
+      
     },
     setBumpStatusNoMatch: function(){
        
@@ -758,7 +782,7 @@ Ext.define("Cheers.controller.Main", {
                            console.log(result); 
                              if (result.success){
                                  
-                                  pointsbar_length = (result.points/100)* 220;
+                                  pointsbar_length = (result.points/MAX_TOTAL_POINTS)* 220;
                                    //alert(pointsbar_length); 
                                    //alert(pointsbar_length);
                                    pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538"></div>');
@@ -766,7 +790,7 @@ Ext.define("Cheers.controller.Main", {
                                   
                                    
                                    // points_text = Ext.getCmp("points_text");
-                                   points_remaining = 100 -result.points;
+                                   points_remaining = MAX_TOTAL_POINTS -result.points;
                                    //console.log(points_text);
                                  //  points_text.setHtml(points_remaining+ ' Points towards a free <br> beer  ')
                                    

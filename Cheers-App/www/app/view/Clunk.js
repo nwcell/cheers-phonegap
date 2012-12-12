@@ -35,6 +35,11 @@ Ext.define('Cheers.view.Clunk', {
                  id: 'bgpoints'
             },
             {
+                 html: '<div style="top:18px;position:relative;left:+20px"></div> ',
+                 cls: 'bg_redeem',
+                 id: 'redeem'
+            },
+            {
                 html:'',
                 id: 'points_text',
                 cls: 'points_cls'
