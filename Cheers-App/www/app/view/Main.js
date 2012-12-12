@@ -215,7 +215,49 @@ Ext.define("Cheers.view.Main", {
 
                                } 
                             ]
-                   } 
+                   },
+                   {
+                      xtype: 'fieldset',
+                      title: 'Debug',
+                      items:[
+                          {
+                            xtype: 'togglefield',
+                            label: 'Debug On',
+                            name: 'debug',  
+                            id: 'debugOn',
+                            value: DEBUG
+                          },
+                          {
+                            xtype: 'textfield',
+                            label: 'Bump With ID',
+                            name: 'bump_with',
+                            id: 'debugBumpWith',
+                            value: DEBUG_BUMP_WITH
+                          },
+                          {
+                            xtype: 'textfield',
+                            label: 'Force Latitude',
+                            name:'lat',
+                            id: 'debugLat',
+                            value: DEBUG_LAT
+                                                           
+
+                          },
+                          {
+                            xtype:'textfield',
+                            label:'Force Longitude',
+                            id: 'debugLon',
+                            name: 'lon',
+                            value:DEBUG_LON
+                          },
+                          {
+                           xtype:'button',
+                           text: 'Update',
+                           id: 'debugUpdate'
+                          }
+                      ]
+                   }
+                   
                 ]
             }
         ]

@@ -21,12 +21,24 @@ Ext.define("Cheers.controller.Main", {
             bump_yes:       "#bump_yes",
             bump_no:        "#bump_no",
             clunkView:      "#clunkView",
+            backFromReport: "#backFromReport",
+            submitReport:   "#submitReport",
+            reportId:       "#reportId",
+            debugUpdate:    "#debugUpdate"
              
             
              
         },
         control: {
-            
+            debugUpdate:{
+              tap: "debugUpdate"  
+            },
+            submitReport:{
+              tap: "submitReport"  
+            },
+            backFromReport:{
+              tap: "backFromReport"  
+            },
             
             clunkView: {
               painted: "clunkViewUpdate"  
@@ -69,6 +81,58 @@ Ext.define("Cheers.controller.Main", {
              	 
         }
     },
+   debugUpdate: function(){
+     alert('updating debug details');
+     debugOn = Ext.getCmp("debugOn");
+     alert(debugOn.getValue());
+   },
+   submitReport: function(){
+     //alert('wee'); 
+     var form = this.getReportId();
+     formValues = form.getValues();
+     
+     location_set = formValues['location_set'];
+     other = formValues['other'];
+     location_set = formValues['location_set'];
+     location_detected = formValues['location_detected'];
+     lat = formValues['lat'];
+     lon = formValues['lon'];
+     
+     
+       Ext.Ajax.request({
+                            url: API_URL,
+                            async : false,
+                            params: {
+                            id: USER_ID,
+                            action: 'report',
+                            location_set: location_set,
+                            other: other,
+                            location_detected: location_detected,                            
+                            lat: lat,
+                            lon: lon,
+                            random: Math.random()
+                            },
+                            success: function(response, opts) {
+                          
+                            Ext.Msg.alert('Thank You','Report submitted succesfully.')
+                            
+                            },
+                            failure: function(response, opts) {
+                                 
+                                 
+                                 
+                            }
+                           
+                     });
+                     
+     
+     
+     
+   },
+   backFromReport: function(){
+        
+        Ext.Viewport.animateActiveItem(this.getMainPannel(), {type:'slide', direction:'right'});
+   },
    clunkViewTap: function(){
      alert(1);  
    },
@@ -107,6 +171,8 @@ Ext.define("Cheers.controller.Main", {
         
         bugreport = Ext.getCmp("bugreport");
         bugreport.addCls('hidden');
+        
+        LOCATION_NAME = "Unknown";
         
          setTimeout(function() {
         // do your work here
@@ -155,7 +221,7 @@ Ext.define("Cheers.controller.Main", {
                                    location_text = Ext.getCmp("location_text");
                                    console.log(location_text);
                                    location_text.setHtml(result.data.name);
-                                   
+                                   LOCATION_NAME = result.data.name;
                                    
                                   //  Ext.fly('bg_points').setStyle('visibility', 'visible');
                                    //bg_points.setStyle
@@ -233,7 +299,7 @@ Ext.define("Cheers.controller.Main", {
    },
    bugReport: function(){
     if (!this.Report) this.Report = Ext.create('Cheers.view.Report');
-        Ext.Viewport.setActiveItem(this.Report);
+       Ext.Viewport.animateActiveItem(this.Report, {type:'slide', direction:'left'});
    
    },
    clunkViewUpdate: function(panel){
@@ -255,6 +321,15 @@ Ext.define("Cheers.controller.Main", {
                  }
                  if (t.id == 'bug_report'){
                     Cheers.app.getControllerInstances()['Cheers.controller.Main'].bugReport();
+                 }
+                 
+                 
+             }
+             
+             var div = e.getTarget('div');
+             if (div){
+                if (t.id == 'sim_match_area'){
+                     Cheers.app.getControllerInstances()['Cheers.controller.Main'].setBumpStatusMatch();
                  }
              }
          }, panel);

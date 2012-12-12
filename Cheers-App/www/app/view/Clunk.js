@@ -84,27 +84,19 @@ Ext.define('Cheers.view.Clunk', {
                 cls:'clunkability_cls'
             },
             {
-           html:'<span class="refresh" id="refresh_id">Check location again</span>',  
+            html:'<span class="refresh" id="refresh_id">Check location again</span>',  
                cls: 'refresh_cls',               
                id: 'refresh_location',
-              /* listeners:[
-                {
-                    element: 'element',
-                    delegate: 'span.refresh',
-                    event:'tap',
-                    fn: function(){
-                       this.fireEvent('clunkViewUpdate');
-                    }
-                }
-               ]*/
+              
                
+            },
+            {
+              
+              html: '<div class="sim_match" id="sim_match_area">&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;</div>',              
+              id: 'sim_match',
+              cls: 'sim_match_cls',
+              
             }
-            /*{
-              xtype:'button',
-              text: 'sim-match',
-              width:'5%',
-              id: 'sim_match'
-            }*/
         ]
     }
 

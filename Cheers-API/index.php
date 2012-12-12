@@ -14,8 +14,23 @@ $bump_with = getForm("bump_with");
 $lat    = getForm('lat');
 $lng    = getForm('lng'); //deprecated
 
+$location_set = getForm("location_set");
+$other = getForm("other");
+$location_detected = getForm("location_detected");
+
 
 //@todo create a token for direct auth
+
+if ($action == 'report'){
+    $sql = "INSERT INTO report(userid, location_set, other, location_detected, 
+            lat, lon) VALUES (?, ?, ?, ?, ? , ?)";
+    $res = $db->query($sql, array($id, $location_set, $other, $location_detected,
+            $lat, $lon ));
+   
+    //@TODO add a feedback result
+    
+    exit;
+}
 
 if ($action == 'clunkmate'){
     $sql = "SELECT t1.id as user_id, t1.facebook_uid, concat(t1.first_name,' ',  t1.last_name) as name , t1.photo

@@ -13,6 +13,8 @@ var DEBUG = true;
 var DEBUG_LAT = "37.785835" ;
 //var DEBUG_LAT = "161.218544" ;
 var DEBUG_LON = "-122.406418";
+var LOCATION_NAME = 'Unknown';
+var DEBUG_BUMP_WITH = 5;
 
 document.addEventListener('deviceready', function() {
    try {

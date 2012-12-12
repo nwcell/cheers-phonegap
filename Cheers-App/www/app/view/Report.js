@@ -1,6 +1,6 @@
 Ext.define('Cheers.view.Report', {
-    extend: 'Ext.Panel',    
-    id: 'ReportId',
+    extend: 'Ext.form.Panel',    
+    id: 'reportId',
     config: {             
              scrollable:true,
              layout: 'fit',
@@ -24,7 +24,8 @@ Ext.define('Cheers.view.Report', {
                         xtype: 'button',
                         text: 'Submit',
                         ui: 'confirm',
-                        align:'right'
+                        align:'right',
+                        id: 'submitReport'
                     }
                     
                    
@@ -38,27 +39,33 @@ Ext.define('Cheers.view.Report', {
                     
                     {
                         xtype: 'textfield',
-                        label: 'I am at?' 
+                        label: 'I am at?',
+                        name: 'location_set'
                         
                     },
                     {
                         xtype:'textareafield',
-                        label:'Other info that may help.'
+                        label:'Other info that may help.',
+                        name: 'other'
                     },
                     {
                         xtype: 'textfield',
                         label: 'Detected Location',
+                        name: 'location_detected',
+                        value: LOCATION_NAME,
                         readOnly:true
                     },
                     {
                         xtype: 'textfield',
                         label: 'Latitude',
+                        name: 'lat',
                         value: LAT,
                         readOnly:true
                     },
                     {
                         xtype: 'textfield',
                         label: 'Longitude',
+                        name: 'lon',
                         value: LON,
                         readOnly:true
                     } 
