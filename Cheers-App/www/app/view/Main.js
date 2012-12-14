@@ -141,7 +141,7 @@ Ext.define("Cheers.view.Main", {
           
           },
           {
-                 xtype: 'DealsHandler'
+                 xtype: 'DealsMap'
             },
             
             

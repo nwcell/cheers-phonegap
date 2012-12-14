@@ -9,6 +9,12 @@
     
 }
 
+.businessPartner{
+    background-image: url('../images/background_blank.jpg');
+         
+    
+}
+
 .location_box{
   
      
@@ -173,3 +179,103 @@
     color:red;
 }
 
+
+
+.bp_name_cls {
+    
+    position:absolute;
+    top:+36px;
+    color:#ffffff;
+    text-align: center;
+    width:320px;
+}
+
+.bpbg_name_cls {
+    
+    background-image:url('../images/bg_location.gif');
+    
+    width:320px;
+    height:100px;
+    color:#ffffff;
+    position:absolute;
+    top:+5px;
+}
+
+.bpbg_description_cls {
+    
+    background-image:url('../images/bg_description.gif');
+    
+    width:320px;
+    height:121px;
+    color:#ffffff;
+    position:absolute;
+    top:+107px;
+}
+
+.bp_description_cls {
+    
+    position:absolute;
+    top:+107px;
+    color:#ffffff;
+    padding:15px;
+    width:320px;
+}
+
+.bpbg_status_cls {
+    
+    background-image:url('../images/status_bg.png');
+    text-align:center;
+    width:320px;
+    height:40px;
+    color:#ffffff;
+    position:absolute;
+    top:+233px;
+}
+
+
+.bp_status_cls {
+    
+    
+    text-align:center;
+    width:320px;
+    height:40px;
+    color:#ffffff;
+    position:absolute;
+    top:+242px;
+}
+
+.bpbg_badge_cls {
+    
+    background-image:url('../images/badges_bg.png');
+    text-align:center;
+    width:320px;
+    height:65px;
+    color:#ffffff;
+    position:absolute;
+    top:+275px;
+    
+}
+
+.bp_badge_cls {
+    
+    
+    text-align:center;
+    width:320px;
+    height:65px;
+    color:#ffffff;
+    position:absolute;
+    top:+300px;
+    
+}
+
+.bp_recent_cls {
+    
+    
+    text-align:center;
+    width:320px;
+    
+    color:#ffffff;
+    position:absolute;
+    top:+350px;
+    
+}

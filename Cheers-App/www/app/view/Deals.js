@@ -1,7 +1,7 @@
  
 Ext.define('Cheers.view.Deals', {
     extend: 'Ext.tab.Panel',
-    
+   xtype:  'DealsHandler',
     requires: [
         'Cheers.view.Map',
         'Cheers.view.Timeline'

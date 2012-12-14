@@ -156,6 +156,10 @@ Ext.define("Cheers.controller.Main", {
         refresh_location = Ext.getCmp("refresh_location");
        refresh_location.addCls('hidden');
        
+       redeem = Ext.getCmp("redeem");
+       redeem.addCls('hidden');
+       
+       
         location_text = Ext.getCmp("location_text");
         location_text.setHtml('<div style="font-size:16px">Checking your location...</div>')
      

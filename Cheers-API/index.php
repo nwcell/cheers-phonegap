@@ -13,6 +13,7 @@ $lon    = getForm("lon");
 $bump_with = getForm("bump_with");
 $lat    = getForm('lat');
 $lng    = getForm('lng'); //deprecated
+$bid    = getForm('bid');
 
 $location_set = getForm("location_set");
 $other = getForm("other");
@@ -20,6 +21,42 @@ $location_detected = getForm("location_detected");
 
 
 //@todo create a token for direct auth
+
+
+if ($action == 'getBpDetailsMore'){
+    
+    //get bp info
+    $sql = "SELECT t1.name, t1. description, t1.description_long,
+            t2.points, t3.max_total_points, 
+            t3.cooldown
+            FROM business t1
+            LEFT JOIN user_points t2 ON t1.id = t2.bp_id and t2.user_id = ?
+            LEFT JOIN bp_rules t3 ON t1.id = t3.bid
+            WHERE t1.id =  ? ";
+    
+    $rows = $db->fetchRow($sql, array($id, $bid));
+    
+    
+    print_r($rows);
+    //exit;
+}
+
+if ($action == 'getBpDetails'){
+    
+    //get bp info
+    $sql = "SELECT t1.name, t1. description, t2.points, t3.max_total_points, 
+            t3.cooldown
+            FROM business t1
+            LEFT JOIN user_points t2 ON t1.id = t2.bp_id and t2.user_id = ?
+            LEFT JOIN bp_rules t3 ON t1.id = t3.bid
+            WHERE t1.id =  ? ";
+    
+    $rows = $db->fetchRow($sql, array($id, $bid));
+    
+    
+    print_r($rows);
+    //exit;
+}
 
 if ($action == 'report'){
     $sql = "INSERT INTO report(userid, location_set, other, location_detected, 
@@ -248,7 +285,7 @@ if ($action == 'match'){
 }
 
 if ($action == 'check' ){
-  echo 'version 0.2';
+  echo 'version 0.3';
   exit;
 }
 

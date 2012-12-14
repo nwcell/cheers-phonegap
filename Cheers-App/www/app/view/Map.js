@@ -1,9 +1,14 @@
 
 Ext.define('Cheers.view.Map', {
     extend: 'Ext.Map',
-    alias: 'widget.map',
+    xtype: 'DealsMap',
+   
 
     config: {
+     title:'Find Deals',
+             iconCls: 'search',
+             scrollable:true,
+             layout: 'fit',    
 		//useCurrentLocation: true,
         listeners: [
             {
@@ -114,11 +119,86 @@ Ext.define('Cheers.view.Map', {
             
             
 
-             overlay = Ext.Viewport.add({
+            //get details from server
+          /*  Ext.Viewport.setMasked({
+			xtype: 'loadmask',
+			message: 'Loading...'
+		});
+            *
+            */
+           
+       if (!this.BusinessPartner) this.BusinessPartner = Ext.create('Cheers.view.BusinessPartner');
+       Ext.Viewport.animateActiveItem(this.BusinessPartner, {type:'flip'}); 
+         
+       return true;
+       
+       Ext.Ajax.request({
+                            url: API_URL,
+                            async : false,
+                            params: {
+                            id: USER_ID,    
+                            bid: bp.bid,
+                            action: 'getBpDetailsMore',
+                            
+                            random: Math.random()
+                            },
+                            success: function(response, opts) {
+                            
+                            Ext.Msg.alert("",response.responseText);
+                            Ext.Viewport.setMasked(false);
+                            },
+                            failure: function(response, opts) {
+                                 
+                                  
+                            Ext.Viewport.setMasked(false);     
+                                 
+                            },
+                            beforerequest: function(){
+
+                            }
+});
+      
+      
+       
+         
+         
+         
+       return false;         
+              Ext.Ajax.request({
+                            url: API_URL,
+                            async : false,
+                            params: {
+                            id: USER_ID,    
+                            bid: bp.bid,
+                            action: 'getBpDetails',
+                            
+                            random: Math.random()
+                            },
+                            success: function(response, opts) {
+                            
+                            Ext.Msg.alert("",response.responseText);
+                            Ext.Viewport.setMasked(false);
+                            },
+                            failure: function(response, opts) {
+                                 
+                                  
+                            Ext.Viewport.setMasked(false);     
+                                 
+                            },
+                            beforerequest: function(){
+
+                            }
+                     });
+                     
+                     
+                     
+           /*  Small box
+            *  
+            *  overlay = Ext.Viewport.add({
             xtype: 'panel',
             centered:true,
-            modal: false,
-            hideOnMaskTap: false,
+            modal: true,
+            hideOnMaskTap: true,
             hidden: true,       
             width:   260  ,
             height:   '70%'  ,
@@ -143,7 +223,7 @@ Ext.define('Cheers.view.Map', {
                      }]
                 } 
             ]
-        });
+        });*/
 
             
             

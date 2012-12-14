@@ -1,7 +1,7 @@
  
 Ext.define('Cheers.view.DealsHandler', {
     extend: 'Ext.Panel',
-    xtype:  'DealsHandler',
+   // xtype:  'DealsHandler',
     id: 'DealsHanlderId',
     config: {
              title:'Find Deals',
