@@ -95,7 +95,8 @@ Ext.define('Cheers.view.Map', {
 
     addMarker: function(bp) {
 
-		console.log('weeee='+bp.lat);
+
+ 	console.log('weeee='+bp.lat);
         var infoWindow = new google.maps.InfoWindow(),
         point = new google.maps.LatLng(
         bp.lat,
@@ -126,10 +127,12 @@ Ext.define('Cheers.view.Map', {
 		});
             *
             */
-           
-       if (!this.BusinessPartner) this.BusinessPartner = Ext.create('Cheers.view.BusinessPartner');
-       Ext.Viewport.animateActiveItem(this.BusinessPartner, {type:'flip'}); 
-         
+        
+       
+        
+      // if (!this.BusinessPartner) this.BusinessPartner = Ext.create('Cheers.view.BusinessPartner');
+      // Ext.Viewport.animateActiveItem(this.BusinessPartner, {type:'flip'}); 
+          Cheers.app.getControllerInstances()['Cheers.controller.Main'].showBusiness(bp.bid) 
        return true;
        
        Ext.Ajax.request({
@@ -161,7 +164,7 @@ Ext.define('Cheers.view.Map', {
       
        
          
-         
+      
          
        return false;         
               Ext.Ajax.request({

@@ -1,9 +1,13 @@
 Ext.define("Cheers.view.BusinessPartner", {
     extend: "Ext.Panel",  
+    xtype: 'businessPartnerType',
     id: 'businessPartner',
     config: {
               
-            
+             title:'',
+             iconCls: 'User',
+             scrollable:true, 
+             hidden:true,
             
             scrollable: true,
             fullscreen: true,
@@ -19,7 +23,7 @@ Ext.define("Cheers.view.BusinessPartner", {
                         items: [
                             {
                                 xtype: 'button',
-                                id: 'backFromMap',
+                                id: 'backFromBp',
                                 ui: 'back',
                                 align:'left',
                                 text: 'Back'

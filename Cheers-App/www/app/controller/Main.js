@@ -24,12 +24,16 @@ Ext.define("Cheers.controller.Main", {
             backFromReport: "#backFromReport",
             submitReport:   "#submitReport",
             reportId:       "#reportId",
-            debugUpdate:    "#debugUpdate"
+            debugUpdate:    "#debugUpdate",
+            backFromBp:     "#backFromBp"
              
             
              
         },
         control: {
+            backFromBp:{
+              tap: "backFromBp"  
+            },
             debugUpdate:{
               tap: "debugUpdate"  
             },
@@ -80,6 +84,15 @@ Ext.define("Cheers.controller.Main", {
             
              	 
         }
+    },
+    backFromBp: function(){
+        var myview = this.getMainPannel();
+        myview.setActiveItem(2)
+    },
+    showBusiness: function(bid){
+        var myview = this.getMainPannel();
+        myview.setActiveItem(5)
+      //alert(bid);  
     },
    debugUpdate: function(){
      //alert('updating debug details');

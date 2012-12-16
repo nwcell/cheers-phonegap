@@ -140,9 +140,10 @@ Ext.define("Cheers.view.Main", {
 
           
           },
+         
           {
                  xtype: 'DealsMap'
-            },
+          },
             
             
             {
@@ -259,7 +260,12 @@ Ext.define("Cheers.view.Main", {
                    }
                    
                 ]
+            },
+            
+             {
+              xtype: 'businessPartnerType'
             }
+          ,
         ]
     }
 });
