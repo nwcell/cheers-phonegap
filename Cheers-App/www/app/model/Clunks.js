@@ -8,6 +8,11 @@ Ext.define('Cheers.model.Clunks', {
               'user_id',
               'total',
               'last_clunked',
+              'bump_with',
+              'first_name',
+              'last_name',
+              'show_me',
+              'show_him'
          
               ]
     }

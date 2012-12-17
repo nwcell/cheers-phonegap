@@ -184,19 +184,26 @@
 .bp_name_cls {
     
     position:absolute;
-    top:+36px;
-    color:#ffffff;
-    text-align: center;
+    top:+8px;
+    color:#000;
+    left:19px;
     width:320px;
 }
 
+.bp_points_text_cls{
+    position:absolute;
+    top:+11px;
+    color:#000;
+    text-align:center;
+    width:320px; 
+}
 .bpbg_name_cls {
     
-    background-image:url('../images/bg_location.gif');
+    background-image:url('../images/pbar.png');
     
     width:320px;
-    height:100px;
-    color:#ffffff;
+    height:32px;
+    color:#000;
     position:absolute;
     top:+5px;
 }
@@ -209,16 +216,17 @@
     height:121px;
     color:#ffffff;
     position:absolute;
-    top:+107px;
+    top:+40px;
 }
 
 .bp_description_cls {
     
     position:absolute;
-    top:+107px;
+    top:+40px;
     color:#ffffff;
     padding:15px;
     width:320px;
+    font-size:12px;
 }
 
 .bpbg_status_cls {
@@ -229,7 +237,7 @@
     height:40px;
     color:#ffffff;
     position:absolute;
-    top:+233px;
+    top:+166px;
 }
 
 
@@ -241,7 +249,7 @@
     height:40px;
     color:#ffffff;
     position:absolute;
-    top:+242px;
+    top:+175px;
 }
 
 .bpbg_badge_cls {
@@ -252,7 +260,7 @@
     height:65px;
     color:#ffffff;
     position:absolute;
-    top:+275px;
+    top:+208px;
     
 }
 
@@ -264,7 +272,7 @@
     height:65px;
     color:#ffffff;
     position:absolute;
-    top:+300px;
+    top:+233px;
     
 }
 
@@ -272,10 +280,24 @@
     
     
     text-align:center;
+  
+    
+    color:#ffffff;
+    position:absolute;
+     padding-left:20px;
+    padding-right:10px;
+    width:300px;
+    top:+280px;
+    
+}
+
+.bp_recent_head_cls{
+    
+  text-align:center;
     width:320px;
     
     color:#ffffff;
     position:absolute;
-    top:+350px;
-    
+    top:+270px;  
+   
 }

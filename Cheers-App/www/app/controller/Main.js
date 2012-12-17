@@ -92,7 +92,82 @@ Ext.define("Cheers.controller.Main", {
     showBusiness: function(bid){
         var myview = this.getMainPannel();
         myview.setActiveItem(5)
-      //alert(bid);  
+         Ext.Viewport.setMasked({
+                xtype: 'loadmask',
+                message: 'Loading...'
+            });
+        
+        Ext.Ajax.request({
+                url: API_URL,
+                async : false,
+                params: {
+                id: USER_ID,    
+                bid: bid,
+                action: 'getBpDetailsMore',
+
+                random: Math.random()
+                },
+                success: function(response, opts) {
+
+                result = Ext.decode(response.responseText)
+                console.log(result);
+                
+                businessPartnerTitle = Ext.getCmp("businessPartnerTitle");
+                businessPartnerTitle.setTitle(result.bp.name);
+                
+                bp_description = Ext.getCmp("bp_description");
+                bp_description.setHtml(result.bp.description_long)
+                
+                bp_name = Ext.getCmp("bp_name");
+                
+                pointsbar_length = (result.bp.points /result.bp.max_total_points)*279;
+                bp_name.setHtml('<div style="width:'+pointsbar_length+'px;height:27px;background-color:#b25538;left:10px;"></div>');
+
+                bp_points_text = Ext.getCmp("bp_points_text");
+                bp_points_text.setHtml(result.bp.points +'/'+result.bp.max_total_points);
+                
+                bp_status = Ext.getCmp("bp_status");
+                bp_status.setHtml('Your rank - ' + result.bp.rank);
+                
+                
+                 badges = result.badges;
+                var badgeresult ='';
+                for(i = 0; i< badges.length;i++){
+                    badgeresult = badgeresult +' *'+ badges[i];
+                }
+                bp_badge = Ext.getCmp("bp_badge");
+                bp_badge.setHtml(badgeresult);
+
+
+                 
+                clunkmate = result.recent;
+                var clunkmate_html ='';
+                for(i = 0; i< clunkmate.length;i++){
+                    //console.log(clunkmate[i].first_name);
+                    
+                    photo = 'https://graph.facebook.com/'+ clunkmate[i].facebook_uid+'/picture'
+                    
+                    clunkmate_html = clunkmate_html + '<div style="width:150px;padding:5px;height:45px;font-size:12px"><img src="'+photo+'" align="left" height="40px">'+clunkmate[i].first_name+' '+ clunkmate[i].last_name+'<br> 5 Hours ago</div>'; 
+                }
+                bp_recent = Ext.getCmp("bp_recent");
+                bp_recent.setHtml(clunkmate_html);
+                
+                
+                Ext.Viewport.setMasked(false);  
+                },
+                failure: function(response, opts) {
+
+
+                Ext.Viewport.setMasked(false);     
+
+                },
+                beforerequest: function(){
+
+              }
+        });
+        
+        
+      
     },
    debugUpdate: function(){
      //alert('updating debug details');
@@ -544,8 +619,152 @@ Ext.define("Cheers.controller.Main", {
        //alert(1);
    },
    myClunksListOption: function (list, record, item, e){
-       alert(1);
-       console.log(e);
+       //alert(1);
+      store = this.Friends;
+      //console.log('frieendds');
+      //console.log(e.data.id);
+      record = store.findRecord('id', e.data.id);
+      
+      //console.log(record);
+      
+      if (!this.overlay){
+       this.overlay = Ext.Viewport.add({
+            xtype: 'panel',
+            centered:true,
+            modal: true,
+            hideOnMaskTap: true,
+            hidden: true,       
+            width:   260  ,
+            height:  250  ,
+
+            styleHtmlContent: true,
+            scrollable: false,
+
+            // Insert a title docked at the top with a title
+            items: [
+                {
+                    xtype: 'hiddenfield',
+                    value: '',
+                    id: 'clunk_with_fr'
+                },
+                {
+                     html: '<b>Robert Gray</b>',
+                     id: 'clunker_name_fr',
+                     listeners:[{
+                         element: 'element',
+                         delegate: 'div.close',
+                         event: 'tap',
+                         fn: function(){
+                             alert('close');
+                         }
+                     }]
+                },
+                {
+                    xtype: 'togglefield',
+                    label: 'Can see him/her',
+                    name: 'show_him_fr',  
+                    id: 'show_him_fr',
+                    listeners: {
+                        change: function(slider, thumb, newValue, oldValue) {
+                           
+                          // store = Ext.getStore("Clunkmate");
+                           //console.log('Record?');
+                           //console.log(record);
+                           //console.log(newValue);
+                           
+                           record.set('show_him',newValue);
+                           //store.sync();
+                           
+                                   clunk_with_fr = Ext.getCmp("clunk_with_fr").getValue();
+                                   Ext.Ajax.request({
+                                   url: API_URL,
+                                   async : false,
+                                   params: {
+                                   id: USER_ID,
+                                   clunkmate: clunk_with_fr,
+                                   action: 'setClunkmateHim',
+                                   show_him: newValue,
+                                   
+                                   random: Math.random()
+                                   },
+                                   success: function(response, opts) {
+
+                                  // Ext.Msg.alert('Thank You','Report submitted succesfully.')
+                                   console.log('success');
+                                   },
+                                   failure: function(response, opts) {
+
+
+
+                                   }
+
+                            });
+
+                        }
+                    }
+                    
+                },
+                {
+                    xtype: 'togglefield',
+                    label: 'He/She can see me',
+                    name: 'show_me_fr',  
+                    id: 'show_me_fr',
+                       listeners: {
+                        change: function(slider, thumb, newValue, oldValue) {
+                           
+                           console.log(newValue);
+                                   clunk_with_fr = Ext.getCmp("clunk_with_fr").getValue();
+                                   Ext.Ajax.request({
+                                   url: API_URL,
+                                   async : false,
+                                   params: {
+                                   id: USER_ID,
+                                   clunkmate: clunk_with_fr,
+                                   action: 'setClunkmateMe',
+                                   show_me: newValue,
+                                   
+                                   random: Math.random()
+                                   },
+                                   success: function(response, opts) {
+
+                                  // Ext.Msg.alert('Thank You','Report submitted succesfully.')
+                                   console.log('success');
+                                   },
+                                   failure: function(response, opts) {
+
+
+
+                                   }
+
+                            });
+
+                        }
+                    }
+                     
+                }
+            ]
+        });
+        }
+        
+               
+        overlay = this.overlay;
+        
+       // overlay.setValue('show_him_fr', 1);
+        
+        console.log(e);
+        clunk_with_fr = Ext.getCmp("clunk_with_fr");
+        clunk_with_fr.setValue(e.data.bump_with);
+        clunker_name_fr = Ext.getCmp("clunker_name_fr");
+        clunker_name_fr.setHtml(e.data.first_name +' ' + e.data.last_name);
+        
+        show_him_fr = Ext.getCmp("show_him_fr");
+        show_him_fr.setValue(e.data.show_him);
+        
+        show_me_fr = Ext.getCmp("show_me_fr");
+        show_me_fr.setValue(e.data.show_me);
+        
+        overlay.show();
+        
        
    },
    backFromMap: function(){
@@ -697,6 +916,7 @@ Ext.define("Cheers.controller.Main", {
         });
         Items.load();
         
+        this.Friends = Items;
          
         myClunksList =  Ext.getCmp("myClunksList");
 	myClunksList.setStore(Items); 

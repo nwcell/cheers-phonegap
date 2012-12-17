@@ -18,10 +18,21 @@ $bid    = getForm('bid');
 $location_set = getForm("location_set");
 $other = getForm("other");
 $location_detected = getForm("location_detected");
+$show_him   = getForm("show_him");
+$show_me    = getForm("show_me");
+$clunkmate  = getForm("clunkmate");
 
 
 //@todo create a token for direct auth
 
+if ($action == 'setClunkmateHim'){
+    $sql = "UPDATE clunkmate SET show_him = ? WHERE user_id = ? AND  clunker_id = ?";
+    $res = $db->query($sql, array($show_him, $id, $clunkmate));
+    
+    echo $sql;
+    echo "$show_him, $id, $clunkmate";
+    exit;
+}
 
 if ($action == 'getBpDetailsMore'){
     
@@ -37,7 +48,37 @@ if ($action == 'getBpDetailsMore'){
     $rows = $db->fetchRow($sql, array($id, $bid));
     
     
-    print_r($rows);
+    /*
+     * ,   
+            t2.bp_id, t3.user_id, t3.clunker_id, t3.show_me, t3.show_him, t4.user_id as user_idt,
+            t4.clunker_id as clunker_idt, t4.show_me as show_met, t4.show_him as show_himt
+     */
+    //get clunkmates
+    $sql = "SELECT Distinct(t2.id), t1.id as friend_id, t1.first_name, 
+            t1.last_name, t1.facebook_uid, t2.date
+            FROM login t1
+            INNER JOIN clunks t2 ON t1.id = t2.user_id AND t2.bp_id = ? AND t2.status = ?
+            INNER JOIN clunkmate t3 ON t1.id = t3.user_id AND t3.clunker_id = ?
+            INNER JOIN clunkmate t4 ON t4.user_id = t3.clunker_id AND t4.clunker_id = t1.id
+            WHERE t1.id <> ? AND t3.show_me = ? AND t4.show_him = ?
+            LIMIT 5
+            ";
+          //INNER JOIN clunkmate t3 ON t1.id = t3.user_id AND t3.clunker_id = ?  Get clunker_id with id = USERID
+          
+          //
+    $clunkmates = $db->fetchAll($sql, array($bid,1, $id, $id, 1, 1));
+    
+   
+    
+    $rows['rank'] = 'Alpha Player';
+    $result['success'] = true;
+    $result['bp'] = $rows;
+    $result['recent'] = $clunkmates;
+    $result['badges'] = array('Bender','Entourage','Player');
+    
+     
+    
+    echo json_encode($result);
     //exit;
 }
 
@@ -174,6 +215,8 @@ if ($action == 'match'){
     $sql = "INSERT INTO clunks(user_id, bump_with, lat, lon) VALUES (?, ?,
             ?, ?)";
     $res = $db->query($sql, array($id, $bump_with, $lat, $lon));
+    
+    $clunk_id = $db->lastInsertId();
       
     $sql = "SELECT t1.id, t1.bid,  ( 3959 * acos( cos( radians(?) ) * cos( radians( t1.lat ) ) 
             * cos( radians( t1.lon ) - radians(?) ) + sin( radians(?) ) * 
@@ -266,6 +309,10 @@ if ($action == 'match'){
                 $sql ="INSERT INTO user_points (bp_id, user_id , points) VALUES (? , ? , ?)
                         ON DUPLICATE KEY UPDATE points = points + ?";
                 $res = $db->query($sql, array($rows[0]['bid'], $id, $points_to_add, $points_to_add));
+                
+                //update clunk bp id
+                $sql = "UPDATE  clunks SET status = ?, bp_id = ?  WHERE id = ? ";
+                $res = $db->query($sql, array(1, $rows[0]['bid'], $clunk_id));
              }
 
         }else{
@@ -342,13 +389,18 @@ if ($action =='fblogin'){
 if ($action == 'myclunks'){
     
     $sql = "SELECT count(t1.id) as total , t1.bump_with, t2.facebook_uid,
-            t2.first_name, t2.last_name, MAX(t1.date) as last_clunked FROM clunks t1 
+            t2.first_name, t2.last_name, MAX(t1.date) as last_clunked, t3.show_me,
+            t3.show_him
+            FROM clunks t1 
             INNER JOIN login t2 on t1.bump_with = t2.id
+            LEFT JOIN clunkmate t3 ON t1.bump_with = t3.clunker_id AND t3.user_id = ?
             WHERE t1.user_id = ?
             GROUP by t1.bump_with
             ORDER BY last_clunked DESC";
-     $rows = $db->fetchAll($sql, array($id));
+     $rows = $db->fetchAll($sql, array($id, $id));
      //print_r($rows);
+     
+     
      echo json_encode($rows);
      exit;
      echo "[{user_id:4, photo_url:'http://graph.facebook.com/100000895460798/picture', total: '5', last_clunked:'November 14' },{user_id:4, photo_url:'http://www.facebook.com/profile.php?id=100000895460798', total: '5', last_clunked:'November 14' }]"; 

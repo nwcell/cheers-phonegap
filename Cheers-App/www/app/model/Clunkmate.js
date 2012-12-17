@@ -7,6 +7,7 @@ Ext.define('Cheers.model.Clunkmate', {
               'facebook_uid',
               'user_id',
               'name',
+              'bump_with'
            
          
               ]
