@@ -144,7 +144,7 @@ Ext.define("Cheers.view.Main", {
           },
             
             
-            {
+          {
                 title: 'History',
                 iconCls: 'star',
                 id: 'clunkmateView',
@@ -260,8 +260,11 @@ Ext.define("Cheers.view.Main", {
                 ]
             },
             
-             {
+            {
               xtype: 'businessPartnerType'
+            },
+            {
+              xtype: 'redeemType'
             }
           ,
         ]

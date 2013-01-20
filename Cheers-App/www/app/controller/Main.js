@@ -25,12 +25,16 @@ Ext.define("Cheers.controller.Main", {
             submitReport:   "#submitReport",
             reportId:       "#reportId",
             debugUpdate:    "#debugUpdate",
-            backFromBp:     "#backFromBp"
+            backFromBp:     "#backFromBp",
+            backFromRedeem: "#backFromRedeem"
              
             
              
         },
         control: {
+            backFromRedeem:{
+              tap: "backFromRedeem"  
+            },
             backFromBp:{
               tap: "backFromBp"  
             },
@@ -85,6 +89,18 @@ Ext.define("Cheers.controller.Main", {
              	 
         }
     },
+    backFromRedeem: function(){
+        var myview = this.getMainPannel();
+        myview.setActiveItem(0)
+
+    },
+    showRedeem: function(BP_ID, BP_NAME){
+        
+         title = Ext.getCmp("RedeemBP");
+         title.setTitle(BP_NAME);
+         var myview = this.getMainPannel();
+         myview.setActiveItem(6);
+    },
     backFromBp: function(){
         var myview = this.getMainPannel();
         myview.setActiveItem(2)
@@ -130,7 +146,7 @@ Ext.define("Cheers.controller.Main", {
                 bp_status.setHtml('Your rank - ' + result.bp.rank);
                 
                 
-                 badges = result.badges;
+                badges = result.badges;
                 var badgeresult ='';
                 for(i = 0; i< badges.length;i++){
                     badgeresult = badgeresult +' *'+ badges[i];
@@ -170,24 +186,20 @@ Ext.define("Cheers.controller.Main", {
       
     },
    debugUpdate: function(){
-     //alert('updating debug details');
+     
      DEBUG = Ext.getCmp("debugOn").getValue();
      DEBUG_BUMP_WITH = Ext.getCmp("debugBumpWith").getValue();
      DEBUG_LAT = Ext.getCmp("debugLat").getValue();
      DEBUG_LON = Ext.getCmp("debugLon").getValue();
-     
-      localStorage.setItem("DEBUG", DEBUG);
-      localStorage.setItem("DEBUG_BUMP_WITH", DEBUG_BUMP_WITH);
-      localStorage.setItem("DEBUG_LAT", DEBUG_LAT);
-      localStorage.setItem("DEBUG_LON", DEBUG_LON);
-       
-      
-     //alert(DEBUG +" "+ DEBUG_BUMP_WITH+ " "+DEBUG_LAT + " "+ DEBUG_LON);
+     localStorage.setItem("DEBUG", DEBUG);
+     localStorage.setItem("DEBUG_BUMP_WITH", DEBUG_BUMP_WITH);
+     localStorage.setItem("DEBUG_LAT", DEBUG_LAT);
+     localStorage.setItem("DEBUG_LON", DEBUG_LON);
      Ext.Msg.alert("Debug settings saved.")
      
    },
    submitReport: function(){
-     //alert('wee'); 
+   
      var form = this.getReportId();
      formValues = form.getValues();
      
@@ -199,7 +211,7 @@ Ext.define("Cheers.controller.Main", {
      lon = formValues['lon'];
      
      
-       Ext.Ajax.request({
+     Ext.Ajax.request({
                             url: API_URL,
                             async : false,
                             params: {
@@ -242,10 +254,10 @@ Ext.define("Cheers.controller.Main", {
    clunkRefresh: function(){
        
         refresh_location = Ext.getCmp("refresh_location");
-       refresh_location.addCls('hidden');
+        refresh_location.addCls('hidden');
        
-       redeem = Ext.getCmp("redeem");
-       redeem.addCls('hidden');
+        redeem = Ext.getCmp("redeem");
+        redeem.addCls('hidden');
        
        
         location_text = Ext.getCmp("location_text");
@@ -263,7 +275,6 @@ Ext.define("Cheers.controller.Main", {
         bgstatus = Ext.getCmp("bgstatus");
         bgstatus.addCls('hidden');
         
-        
         statustext = Ext.getCmp("statustext");
         statustext.addCls('hidden');
         
@@ -278,20 +289,19 @@ Ext.define("Cheers.controller.Main", {
         
         LOCATION_NAME = "Unknown";
         
-         setTimeout(function() {
-        // do your work here
+        setTimeout(function() {
+      
         
         navigator.geolocation.getCurrentPosition(function(position){
                              
                     lat = position.coords.latitude;
                     lon = position.coords.longitude;
-                    console.log('DEBUG = '+DEBUG);
-                    //alert('DEBUG == '
-                    if (DEBUG){
-                        
+                   
+                    if (DEBUG){                   
                         lat = DEBUG_LAT;
                         lon = DEBUG_LON;
                     }
+                    
                     Ext.Ajax.request({
                             url: API_URL,
                             async : false,
@@ -304,41 +314,20 @@ Ext.define("Cheers.controller.Main", {
                             },
                             success: function(response, opts) {
                                     
-                               //aupdate BP_ID
-                              //alert(1);
-                               //alert(response.responseText);
-                               //return response.responseText;
-                                console.log(response.responseText);
-                            
-                               
-                               
                                result = Ext.decode(response.responseText);
-                               console.log(result);
+                               
                                if (result.success){
                                    
                                    //update the Current BP_ID;
                                    BP_ID = result.data.bid;
-                               
-                                   //document.getElementById("bg_points").visibility = 'visibile';
-                                   //
-                                   //
-                                   //do stuff here
-                                   console.log(result.data.name);
+                                   BP_NAME = result.data.name;
+                                   
                                    location_text = Ext.getCmp("location_text");
-                                   console.log(location_text);
                                    location_text.setHtml(result.data.name);
                                    LOCATION_NAME = result.data.name;
-                                   
-                                  //  Ext.fly('bg_points').setStyle('visibility', 'visible');
-                                   //bg_points.setStyle
-                                   
-                                  // console.log(Ext.get('bg_points'));
-                                 // console.log('get visible');
-                                  //document.getElementById("bg_points").style.visibility='visible';
                                   
-                                  
-                                  MAX_TOTAL_POINTS = result.data.max_total_points;
-                                  points_remaining = result.data.max_total_points -result.data.points;
+                                   MAX_TOTAL_POINTS = result.data.max_total_points;
+                                   points_remaining = result.data.max_total_points -result.data.points;
                                   
                                   
                                    points_text.setHtml(points_remaining+ ' Points towards a free <br> beer at '+ result.data.name)
@@ -347,13 +336,19 @@ Ext.define("Cheers.controller.Main", {
                                    pointsbar = Ext.getCmp("pointsbar");
                                    
                                    pointsbar_length = (result.data.points/result.data.max_total_points)* 220;
-                                   //alert(pointsbar_length); 
+                                    
+                                   
+                                   //set redeem button 
+                                   if (result.data.points = result.data.max_total_points){
+                                    pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538;text-align:center" id="redeem_button">Click here to redeem</div>');    
+                                   }else{
                                    
                                    pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538"></div>');
+                                   }
                                    
                                    statustext = Ext.getCmp("statustext");
                                    
-                                   //rank = 'Alpha Elite';
+                                  
                                    statustext.setHtml('Your rank - '+ result.data.rank);
                                    
                                    badges = result.data.badges;
@@ -374,19 +369,14 @@ Ext.define("Cheers.controller.Main", {
                                    bugreport.removeCls('hidden');
                                    
                                }else{
-                                  // Ext.Msg.alert('You need to be in one of our Business Partners')
-                                   
                                    location_text.setHtml('Unknown Place');
                                    refresh_location = Ext.getCmp("refresh_location");
                                    refresh_location.removeCls('hidden');
-                                   
                                    bugreport.removeCls('hidden');
                                }
                             
                             },
                             failure: function(response, opts) {
-                                 
-                                 //alert('Error::Initial Check ::  ' + response.responseText);	
                                  
                                  
                             },
@@ -399,7 +389,7 @@ Ext.define("Cheers.controller.Main", {
              location_text.setHtml('<span style="font-size:15px">No internet/GPS </span>');
              refresh_location = Ext.getCmp("refresh_location");
              refresh_location.removeCls('hidden');
-            //Ext.Msg.alert('Cheers API','Connection error');
+             
             
         });
       }, 300);
@@ -438,6 +428,15 @@ Ext.define("Cheers.controller.Main", {
              if (div){
                 if (t.id == 'sim_match_area'){
                      Cheers.app.getControllerInstances()['Cheers.controller.Main'].setBumpStatusMatch();
+                 }
+                 
+                 if (t.id == 'redeem_button'){
+                     //alert('redeem');
+                     Cheers.app.getControllerInstances()['Cheers.controller.Main'].showRedeem(BP_ID, BP_NAME);
+                 }
+                 
+                 if (t.id == 'redeem_confirm'){
+                     alert(1);
                  }
              }
          }, panel);
@@ -509,13 +508,6 @@ Ext.define("Cheers.controller.Main", {
                             },
                             success: function(response, opts) {
                                     
-                               //aupdate BP_ID
-                              //alert(1);
-                               //alert(response.responseText);
-                               //return response.responseText;
-                                console.log(response.responseText);
-                            
-                               
                                
                                result = Ext.decode(response.responseText);
                                console.log(result);

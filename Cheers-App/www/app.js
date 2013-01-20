@@ -3,7 +3,7 @@ Ext.application({
         'Cheers.view.override.Map'
     ],
     name: 'Cheers',
-    views: ['Main','Clunks','DealsHandler','Clunk','Map','BusinessPartner'],
+    views: ['Main','Clunks','DealsHandler','Clunk','Map','BusinessPartner','Redeem'],
     //'Deals','Map'
     controllers: ['Main'],
     models: ['Clunks','Deal'],

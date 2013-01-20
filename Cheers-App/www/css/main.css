@@ -300,4 +300,15 @@
     position:absolute;
     top:+270px;  
    
+
+}   
+    
+ .redeem_cls {
+    
+    background-image:url('../images/redeem.png');
+    text-align:center;
+    width:320px;
+    height:100px;
+    color:#ffffff;
+    position:absolute;
 }
