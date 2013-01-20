@@ -89,6 +89,37 @@ Ext.define("Cheers.controller.Main", {
              	 
         }
     },
+    redeemComplete: function(){
+        
+          
+        Ext.Ajax.request({
+              url: API_URL,
+              async : false,
+              params: {
+              id: USER_ID,
+              action: 'redeem',
+              bid: BP_ID,
+              random: Math.random()
+              },
+              success: function(response, opts) {
+
+              redeem_id = Ext.getCmp("redeem_id");    
+              redeem_id.addCls('hidden');
+              redeem_confirm_id = Ext.getCmp("redeem_confirm_id");
+              redeem_confirm_id.removeCls('hidden');
+
+              },
+              failure: function(response, opts) {
+
+
+
+              }
+
+       });
+   
+      
+      
+    },
     backFromRedeem: function(){
         var myview = this.getMainPannel();
         myview.setActiveItem(0)
@@ -288,6 +319,8 @@ Ext.define("Cheers.controller.Main", {
         bugreport.addCls('hidden');
         
         LOCATION_NAME = "Unknown";
+        BP_ID = null;
+        BP_NAME = "";
         
         setTimeout(function() {
       
@@ -318,6 +351,8 @@ Ext.define("Cheers.controller.Main", {
                                
                                if (result.success){
                                    
+                                   //normalize
+                                   if (result.data.points > result.data.max_total_points ) result.data.points = result.data.max_total_points ;
                                    //update the Current BP_ID;
                                    BP_ID = result.data.bid;
                                    BP_NAME = result.data.name;
@@ -329,8 +364,11 @@ Ext.define("Cheers.controller.Main", {
                                    MAX_TOTAL_POINTS = result.data.max_total_points;
                                    points_remaining = result.data.max_total_points -result.data.points;
                                   
-                                  
-                                   points_text.setHtml(points_remaining+ ' Points towards a free <br> beer at '+ result.data.name)
+                                   if(points_remaining == 0){
+                                      points_text.setHtml(' Redeem a free drink!');
+                                   }else{
+                                      points_text.setHtml(points_remaining+ ' Points towards a free <br> beer at '+ result.data.name); 
+                                   }
                                    points_text.removeCls('hidden');
                                    
                                    pointsbar = Ext.getCmp("pointsbar");
@@ -339,7 +377,7 @@ Ext.define("Cheers.controller.Main", {
                                     
                                    
                                    //set redeem button 
-                                   if (result.data.points = result.data.max_total_points){
+                                   if (result.data.points == result.data.max_total_points){
                                     pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538;text-align:center" id="redeem_button">Click here to redeem</div>');    
                                    }else{
                                    

@@ -47,11 +47,18 @@ Ext.define("Cheers.view.Redeem", {
                                 delegate: 'div.two',
                                 event: 'swipe',
                                 fn: function() {
-                                    alert('duh');
+                                    //alert('1');
+                                     Cheers.app.getControllerInstances()['Cheers.controller.Main'].redeemComplete();
                                 }
                             }
                         ]
                                 
+                     },
+                     {
+                         html:'',
+                         id: 'redeem_confirm_id',
+                         cls: 'redeem_confirm_cls'
+                         
                      }
                    
                      

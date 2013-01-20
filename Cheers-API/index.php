@@ -13,7 +13,8 @@ $lon    = getForm("lon");
 $bump_with = getForm("bump_with");
 $lat    = getForm('lat');
 $lng    = getForm('lng'); //deprecated
-$bid    = getForm('bid');
+$bid    = getForm('bid'); //deprecated
+$BP_ID  = getFOrm('BP_ID');
 
 $location_set = getForm("location_set");
 $other = getForm("other");
@@ -24,6 +25,16 @@ $clunkmate  = getForm("clunkmate");
 
 
 //@todo create a token for direct auth
+
+if ($action == 'redeem'){
+    
+    $sql = "UPDATE user_points SET points = ? WHERE bp_id = ? AND user_id = ? ";
+    $res = $db->query($sql, array(0, $bid, $id));
+    $result['success'] =true;
+    
+    echo json_encode($result);
+    exit;
+}
 
 if ($action == 'setClunkmateHim'){
     $sql = "UPDATE clunkmate SET show_him = ? WHERE user_id = ? AND  clunker_id = ?";
@@ -279,7 +290,7 @@ if ($action == 'match'){
              if ($rows[0]['points'] >=  $rows[0]['max_total_points']) {
                  $add_points = false;
                  $rows['success'] = false;
-                 $no_points_reason = 'You have reached the maximum points, redeem it now for a free drink! ';
+                 $no_points_reason = 'Redeem a free drink! ';
                  $rows['reason'] = $no_points_reason; 
             }
             

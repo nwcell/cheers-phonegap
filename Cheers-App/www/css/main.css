@@ -311,4 +311,16 @@
     height:100px;
     color:#ffffff;
     position:absolute;
+
+ }    
+ .redeem_confirm_cls {
+    
+    background-image:url('../images/redeem_complete.png');
+    text-align:center;
+    width:320px;
+    height:100px;
+    color:#ffffff;
+    position:absolute;
+    top:+120px;
+    
 }
