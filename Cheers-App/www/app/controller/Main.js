@@ -127,6 +127,12 @@ Ext.define("Cheers.controller.Main", {
     },
     showRedeem: function(BP_ID, BP_NAME){
         
+        redeem_id = Ext.getCmp("redeem_id");
+        redeem_id.removeCls('hidden')
+        
+        redeem_confirm_id = Ext.getCmp("redeem_confirm_id");
+        redeem_confirm_id.addCls("hidden");
+        
          title = Ext.getCmp("RedeemBP");
          title.setTitle(BP_NAME);
          var myview = this.getMainPannel();
@@ -1049,11 +1055,15 @@ Ext.define("Cheers.controller.Main", {
                            console.log(result); 
                              if (result.success){
                                  
+                                  if(result.points > MAX_TOTAL_POINTS) result.points =MAX_TOTAL_POINTS;
                                   pointsbar_length = (result.points/MAX_TOTAL_POINTS)* 220;
                                    //alert(pointsbar_length); 
                                    //alert(pointsbar_length);
-                                   pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538"></div>');
-                                   
+                                   if (result.points == MAX_TOTAL_POINTS){
+                                       pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538;text-align:center" id="redeem_button">Click here to redeem</div>');   
+                                   }else{
+                                       pointsbar.setHtml('<div style="height:25px;width:'+pointsbar_length+'px;background-color:#b25538"></div>');
+                                   }
                                   
                                    
                                    // points_text = Ext.getCmp("points_text");

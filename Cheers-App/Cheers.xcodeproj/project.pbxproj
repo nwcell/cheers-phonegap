@@ -656,7 +656,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rey Padilla (4JFLZQC39X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rey Padilla (4JFLZQC39X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -689,7 +689,7 @@
 				);
 				PRODUCT_NAME = Cheers;
 				PROVISIONING_PROFILE = "5E7F4EA9-3F91-4C0C-AE1A-F09553098864";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5E7F4EA9-3F91-4C0C-AE1A-F09553098864";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
