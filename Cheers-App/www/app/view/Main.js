@@ -147,34 +147,12 @@ Ext.define("Cheers.view.Main", {
           {
                 title: 'History',
                 iconCls: 'star',
-                id: 'clunkmateView',
+                id: 'historyView',
                 layout: 'fit',
                 scrollable:true,
                 items: [
-                     {
-                    title: '',
-                    xtype: 'titlebar',
-                    docked: 'top',
-                      items:[
-                               
-                               {
-                                xtype: 'button',
-                                text: 'Clunkmate Request',
-                                id: 'clunkmate_request',
-                                align: 'right'
-
-                               } ,
-                               
-                                
-                            ]
-                   },
-                   {
-                     html: 'Your current Points is 100'  
-                   },
-                    {
-                     xtype:'button',
-                     text: 'Redeem'
-                   } 
+                    
+                  
                      
                      
                 ]
