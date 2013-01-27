@@ -27,7 +27,7 @@ Ext.define('Cheers.view.Map', {
 
     onMapMaprender: function(map, gmap, options) {
 	
-        alert('rendered');
+       // alert('rendered');
         
        var lat = LAT;
        var lon = LON;
@@ -35,7 +35,10 @@ Ext.define('Cheers.view.Map', {
       
           lat = DEBUG_LAT;
           lon = DEBUG_LON;
+          
+         // alert('debug lat '+lat);
        }
+     
      
 
        var store = Ext.create('Ext.data.Store', {

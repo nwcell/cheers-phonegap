@@ -15,6 +15,10 @@ var DEBUG = true;
 var DEBUG_LAT = "37.785835" ;
 //var DEBUG_LAT = "161.218544" ;
 var DEBUG_LON = "-122.406418";
+
+var DEBUG_LAT = "13.752222" ;
+var DEBUG_LON = "100.493889";
+
 var LOCATION_NAME = 'Unknown';
 var DEBUG_BUMP_WITH = 5;
 var MAX_TOTAL_POINTS = 100;
