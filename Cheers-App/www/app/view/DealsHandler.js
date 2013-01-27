@@ -1,4 +1,3 @@
- 
 Ext.define('Cheers.view.DealsHandler', {
     extend: 'Ext.Panel',
    // xtype:  'DealsHandler',
@@ -11,7 +10,7 @@ Ext.define('Cheers.view.DealsHandler', {
         
         items: [
             {
-                html:'waaa'
+                html:''
             }
         ]
     }

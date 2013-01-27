@@ -26,12 +26,16 @@ Ext.define("Cheers.controller.Main", {
             reportId:       "#reportId",
             debugUpdate:    "#debugUpdate",
             backFromBp:     "#backFromBp",
-            backFromRedeem: "#backFromRedeem"
+            backFromRedeem: "#backFromRedeem",
+            findDealsId:    "#findDealsId"
              
             
              
         },
         control: {
+            findDealsId:{
+              painted: "findDealsPainted"
+            },
             backFromRedeem:{
               tap: "backFromRedeem"  
             },
@@ -88,6 +92,9 @@ Ext.define("Cheers.controller.Main", {
             
              	 
         }
+    },
+    findDealsPainted: function(){
+      alert(1);  
     },
     redeemComplete: function(){
         
