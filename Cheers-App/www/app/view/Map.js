@@ -9,18 +9,25 @@ Ext.define('Cheers.view.Map', {
              iconCls: 'search',
              scrollable:true,
              layout: 'fit',    
-		//useCurrentLocation: true,
+	     useCurrentLocation: true,
         listeners: [
             {
                 fn: 'onMapMaprender',
                 event: 'maprender'
+            },
+            {
+                fn: 'onMapMaprender',
+                event: 'centerchange'
             }
         ]
+    },
+    test: function(){
+      alert('updated');  
     },
 
     onMapMaprender: function(map, gmap, options) {
 	
-   
+        alert('rendered');
         
        var lat = LAT;
        var lon = LON;

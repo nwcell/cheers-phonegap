@@ -1,6 +1,6 @@
 Ext.application({
      requires: [
-     'Cheers.view.override.Map'
+    // 'Cheers.view.override.Map'
     ],
     name: 'Cheers',
     views: ['Main','Clunks','DealsHandler','Clunk','Map','BusinessPartner','Redeem'],

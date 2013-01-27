@@ -9,9 +9,7 @@ Ext.define("Cheers.view.Main", {
         tabBarPosition: 'bottom',
 
         items: [
-            {
-                 xtype: 'DealsMap'
-            },
+           
             {
               xtype: 'ClunkType'  
             },
@@ -38,8 +36,10 @@ Ext.define("Cheers.view.Main", {
              ]
 
           
-          },
-         
+           },
+           {
+                 xtype: 'DealsMap'
+           },
           
             
             
