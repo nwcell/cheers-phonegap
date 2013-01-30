@@ -11,32 +11,25 @@ var BP_NAME = null;
 var FAILED_MESSAGE = 'You need to clunk with someone';
 var BUMP_FAIL_COUNTER = 0;
 var BUMP_FAIL_MAX = 3;
-var DEBUG = true;
-var DEBUG_LAT = "37.785835" ;
-//var DEBUG_LAT = "161.218544" ;
-var DEBUG_LON = "-122.406418";
-
-var DEBUG_LAT = "13.752222" ;
-var DEBUG_LON = "100.493889";
-
 var LOCATION_NAME = 'Unknown';
-var DEBUG_BUMP_WITH = 5;
 var MAX_TOTAL_POINTS = 100;
 
-DEBUG = window.localStorage.getItem("DEBUG");
-LOCATION_NAME = window.localStorage.getItem("LOCATION_NAME");
+
+//Debug stuffs
+DEBUG           = window.localStorage.getItem("DEBUG");
+LOCATION_NAME   = window.localStorage.getItem("LOCATION_NAME");
 DEBUG_BUMP_WITH = window.localStorage.getItem("DEBUG_BUMP_WITH");
-
-
-DEBUG_LAT = window.localStorage.getItem("DEBUG_LAT");
-DEBUG_LON = window.localStorage.getItem("DEBUG_LON");
+DEBUG_LAT       = window.localStorage.getItem("DEBUG_LAT");
+DEBUG_LON       = window.localStorage.getItem("DEBUG_LON");
 
 if(DEBUG_BUMP_WITH == null) DEBUG_BUMP_WITH = 2;
 if(DEBUG_LAT == null) DEBUG_LAT = "37.785835" ;
 if(DEBUG_LON == null) DEBUG_LON = "161.218544" ;
-if(DEBUG == null) DEBUG = false;
+if(DEBUG == null)     DEBUG = false;
+DEBUG    = false;
 
-//alert('is debug ' + DEBUG);
+
+
 document.addEventListener('deviceready', function() {
    try {
 
@@ -73,18 +66,9 @@ function updateContent( data ) {
 }
 
 function cheersSend(data){
-
-    console.log('bump with= '+ data +' BUMP locked ='+ BUMP_LOCKED);
     //prevents from doing another match
     if (BUMP_LOCKED) return false;
-
-    //fix for my android id, don't want to update my android binary this time
-    //if (data == 'Bump User') data = 4;
     
-    //if (data == 'INIT' || !is_numeric(data)) return false;
-    
-    
-    console.log('got here 63')
     Cheers.app.getControllerInstances()['Cheers.controller.Main'].cheersSend(data);
 }
 

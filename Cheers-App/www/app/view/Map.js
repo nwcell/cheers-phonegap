@@ -2,7 +2,7 @@
 Ext.define('Cheers.view.Map', {
     extend: 'Ext.Map',
     xtype: 'DealsMap',
-   
+    id: 'DealsMap',
 
     config: {
      title:'Find Deals',
@@ -27,20 +27,19 @@ Ext.define('Cheers.view.Map', {
 
     onMapMaprender: function(map, gmap, options) {
 	
-       // alert('rendered');
-        
-       var lat = LAT;
-       var lon = LON;
-       if (DEBUG){
-      
+       
+       lat = map._geo._latitude;
+       lon = map._geo._longitude;
+       
+       
+       if (DEBUG == 1 || DEBUG == true){
+          
           lat = DEBUG_LAT;
           lon = DEBUG_LON;
-          
-         // alert('debug lat '+lat);
        }
      
-     
 
+        console.log('lat ='+lat + ' lon ='+lon);
        var store = Ext.create('Ext.data.Store', {
            model: 'Cheers.model.Deal',
            proxy: {
@@ -52,39 +51,23 @@ Ext.define('Cheers.view.Map', {
                            }
            }
            });
-          
+       
+       processMap = this.processMap;
+       
        store.load({
        scope: this,
        callback: function(records) {
+           console.log('processing data...');
            this.processMap(records);
            }
        });
 		
-        
-        /*
-        var neighborhoods = [
-        new google.maps.LatLng(52.511467, 13.447179),
-        new google.maps.LatLng(52.549061, 13.422975),
-        new google.maps.LatLng(52.497622, 13.396110),
-        new google.maps.LatLng(52.517683, 13.394393)
-        ];
-
-
-        for (var i = 0; i < neighborhoods.length; i++) {
-        var m = neighborhoods[i];
-
-        new google.maps.Marker({
-        position: m,
-        map: gmap,
-        draggable: false,
-        animation: google.maps.Animation.DROP
-        });
-        }*/
+ 
     },
 
     processMap: function(bp) {
 	
-        
+        console.log('total bp='+bp.length)
         for (var i = 0, ln = bp.length; i < ln; i++) {
             var bpItem = bp[i].data;
             this.addMarker(bpItem);

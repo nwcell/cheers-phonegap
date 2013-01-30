@@ -12,24 +12,14 @@ Ext.application({
 
     launch: function() {
          
-       /*TODO
-        *Check for Iphone resolution
-        *
-        *if( window.devicePixelRatio >= 2 ){
-        alert( "Hi Res @ Pixel Ratio : " + window.devicePixelRatio + " &amp; Size : " + screen.width * window.devicePixelRatio);
-       }else{
-        alert( "Normal @ Pixel Ratio 1 &amp; Size : " + screen.width + "+" + screen.width);
-       }*/
+     
       
-         
+          
         
         if ( Ext.browser.is.Chrome) {
-        //debug mode
-         USER_ID = 5;
-            
-            if (!this.Main) this.Main = Ext.create('Cheers.view.Main');
-            
-            console.log('this main==>'+ this.Main);
+            //debug mode
+             USER_ID = 5;
+             if (!this.Main) this.Main = Ext.create('Cheers.view.Main');
              Ext.Viewport.add([ this.Main]);
              DEBUG = true;
              LAT = 61.198002;
@@ -37,37 +27,28 @@ Ext.application({
             
         }else{
             
-            //get initial LAT /LON
-         navigator.geolocation.getCurrentPosition(function(position){
-               LAT = position.coords.latitude;
-               LON = position.coords.longitude;
-        }, function(){
-            
-       
-          
-            
-        });
-         
         
         FB.getLoginStatus(function(response) {
             
            
             if (response.status == 'connected' && USER_ID != null) {
              
-              //Bump Init here
              
               result=  window.bump(USER_ID, function(result) {
-               console.log('bump init');
+                    console.log('bump init');
+                        window.bumpable('NO', function(result) {
+                        console.log('bumpable set to no');
+                    });
               });
               
-            
+             
         
               if (!this.Main) this.Main = Ext.create('Cheers.view.Main');
               
                Ext.Viewport.add([ this.Main]);
               
             } else {
-              //alert('not logged in');
+               
               if (!this.Login) this.Login = Ext.create('Cheers.view.Login');
               Ext.Viewport.add([ this.Login]);
             }

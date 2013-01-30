@@ -67,10 +67,10 @@
     NSString* status = [command.arguments objectAtIndex:0];
 
     if ([status isEqualToString:@"NO"]){
-     //[BumpClient sharedClient].bumpable = NO;
+     [BumpClient sharedClient].bumpable = NO;
         NSLog(@"not bumpable");
     }else{
-       // [BumpClient sharedClient].bumpable = YES;
+        [BumpClient sharedClient].bumpable = YES;
         NSLog(@"yes bumpable");
 
     }

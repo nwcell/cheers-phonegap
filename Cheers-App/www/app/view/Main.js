@@ -16,9 +16,9 @@ Ext.define("Cheers.view.Main", {
             {
               title:'Friends',
               iconCls: 'team',
-             scrollable:true,
-               layout: 'fit',
-               id: 'Clunks',
+              scrollable:true,
+              layout: 'fit',
+              id: 'Clunks',
              
              items:[
                     {
@@ -43,7 +43,7 @@ Ext.define("Cheers.view.Main", {
           
             
             
-          {
+           {
                 title: 'History',
                 iconCls: 'star',
                 id: 'historyView',
@@ -51,14 +51,22 @@ Ext.define("Cheers.view.Main", {
                 scrollable:true,
                 items: [
                     
-                  
-                     
+                     {
+                         xtype: 'list',
+                         itemTpl: '<div  >\n\
+                                       <div ><img src="https://graph.facebook.com/{facebook_uid}/picture" width="44px" height=44px"> {first_name} {last_name}\n\
+                                         </div>\n\
+                                     <div >Times Clunked: {total}<br> Last Clunked:{last_clunked}</div>\n\
+                                    </div>',
+                         id: 'myClunksHistory'
+                     }
                      
                 ]
             },
              {
                 title: 'Settings',
                 iconCls: 'settings',
+                id: 'Settings',
 
                 items: [
                     {
@@ -92,7 +100,7 @@ Ext.define("Cheers.view.Main", {
                                } 
                             ]
                    },
-                   {
+                 /*  {
                       xtype: 'fieldset',
                       title: 'Debug',
                       items:[
@@ -132,7 +140,7 @@ Ext.define("Cheers.view.Main", {
                            id: 'debugUpdate'
                           }
                       ]
-                   }
+                   }*/
                    
                 ]
             },
