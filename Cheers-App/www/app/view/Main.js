@@ -150,6 +150,9 @@ Ext.define("Cheers.view.Main", {
             },
             {
               xtype: 'redeemType'
+            },
+            {
+              xtype: 'ClunkmateDetailType'
             }
           ,
         ]

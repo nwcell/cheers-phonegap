@@ -397,6 +397,15 @@ if ($action =='fblogin'){
     
 }
 
+if ($action == 'getClunkmateSetting'){
+    
+    $sql  = "SELECT * FROM clunkmate WHERE user_id = ? and clunker_id = ? ";
+    $rows = $db->fetchRow($sql, array($id, $clunkmate));
+    //echo '1';
+    
+    echo json_encode($rows);
+    exit;
+}
 if ($action == 'myclunks'){
     
     $sql = "SELECT count(t1.id) as total , t1.bump_with, t2.facebook_uid,

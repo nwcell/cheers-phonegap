@@ -30,11 +30,15 @@ Ext.define("Cheers.controller.Main", {
             findDealsId:    "#findDealsId",
             DealsMap:       "#DealsMap",
             historyView:    "#historyView",
-            Settings:       "#Settings"
+            Settings:       "#Settings",
+            backFromClunkMateDetail: "#backFromClunkMateDetail"
             
              
         },
         control: {
+            backFromClunkMateDetail:{
+              tap: "backFromClunkMateDetail"  
+            },
             Settings:{
               painted:"SettingsPainted"  
             },
@@ -103,6 +107,10 @@ Ext.define("Cheers.controller.Main", {
             
              	 
         }
+    },
+    backFromClunkMateDetail: function(){
+        var myview = this.getMainPannel();
+        myview.setActiveItem(1) 
     },
     SettingsPainted: function(){
         window.bumpable('NO', function(result) {
@@ -655,6 +663,42 @@ Ext.define("Cheers.controller.Main", {
        //alert(1);
    },
    myClunksListOption: function (list, record, item, e){
+       
+       clunk_with_fr = Ext.getCmp("clunk_with_fr");
+       clunk_with_fr.setValue(e.data.bump_with);
+       clunkMateDetailTitle = Ext.getCmp("clunkMateDetailTitle");
+       clunkMateDetailTitle.setTitle(e.data.first_name+ ' '+e.data.last_name);
+       
+       
+       Ext.Ajax.request({
+                url: API_URL,
+                async : false,
+                params: {
+                id: USER_ID,
+                clunkmate: clunk_with_fr,
+                action: 'getClunkmateSetting',
+                random: Math.random()
+                },
+                success: function(response, opts) {
+                    
+                    alert(response.responseText);
+                
+                },
+                failure: function(response, opts) {
+
+
+
+                }
+
+         });
+       
+       show_him_fr = Ext.getCmp("show_him_fr");
+       show_him_fr.setValue(0);
+       
+        var myview = this.getMainPannel();
+        myview.setActiveItem(7)
+        
+        return true;
        //alert(1);
       store = this.Friends;
       //console.log('frieendds');
@@ -678,11 +722,11 @@ Ext.define("Cheers.controller.Main", {
 
             // Insert a title docked at the top with a title
             items: [
-                {
+               /* {
                     xtype: 'hiddenfield',
                     value: '',
                     id: 'clunk_with_fr'
-                },
+                },*/
                 {
                      html: '<b>Robert Gray</b>',
                      id: 'clunker_name_fr',
@@ -695,7 +739,7 @@ Ext.define("Cheers.controller.Main", {
                          }
                      }]
                 },
-                {
+               /* {
                     xtype: 'togglefield',
                     label: 'Can see him/her',
                     name: 'show_him_fr',  
@@ -739,7 +783,7 @@ Ext.define("Cheers.controller.Main", {
                         }
                     }
                     
-                },
+                },*/
                 {
                     xtype: 'togglefield',
                     label: 'He/She can see me',
