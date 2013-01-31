@@ -56,7 +56,7 @@ Ext.define("Cheers.view.Main", {
                          itemTpl: '<div  >\n\
                                        <div ><img src="https://graph.facebook.com/{facebook_uid}/picture" width="44px" height=44px"> {first_name} {last_name}\n\
                                          </div>\n\
-                                     <div >Times Clunked: {total}<br> Last Clunked:{last_clunked}</div>\n\
+                                     <div >@ {bp} / {date}</div>\n\
                                     </div>',
                          id: 'myClunksHistory'
                      }

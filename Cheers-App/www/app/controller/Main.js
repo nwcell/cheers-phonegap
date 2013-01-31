@@ -116,10 +116,10 @@ Ext.define("Cheers.controller.Main", {
          
         console.log('updating my clunks')
        var Items = Ext.create('Ext.data.Store', {
-                model: 'Cheers.model.Clunks',
+                model: 'Cheers.model.ClunkHistory',
                 proxy: {
                         type: 'ajax',
-                        url : API_URL +'?id='+USER_ID + '&action=myclunks&rand='+ Math.random(),	
+                        url : API_URL +'?id='+USER_ID + '&action=clunkHistory&rand='+ Math.random(),	
                         reader : {
                                 type : 'json',
                                 rootProperty: ''

@@ -418,6 +418,27 @@ if ($action == 'myclunks'){
      exit;
 }
 
+if ($action == 'clunkHistory'){
+    
+    $sql = "SELECT t1.date, t2.first_name, t2.last_name, t2.facebook_uid,
+            t3.name as bp, t3.photo_url
+            FROM clunks t1
+            INNER JOIN login t2 ON t1.bump_with = t2.id
+            INNER JOIN business t3 ON t1.bp_id = t3.id
+            WHERE t1.user_id = ? AND t1.bp_id <> 0
+            
+            ORDER BY t1.date DESC
+            LIMIT 0, 50
+            ";
+    
+    $rows = $db->fetchAll($sql, array($id));
+     
+     
+     echo json_encode($rows);
+     exit;
+    
+}
+
 function logStuffs(){
     
     ob_start();

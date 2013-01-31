@@ -6,7 +6,7 @@ Ext.application({
     views: ['Main','Clunks','DealsHandler','Clunk','Map','BusinessPartner','Redeem'],
     //'Deals','Map'
     controllers: ['Main'],
-    models: ['Clunks','Deal'],
+    models: ['Clunks','Deal','ClunkHistory'],
     stores: ['Clunks','Deals','Clunkmate'],
  
 
