@@ -23,7 +23,6 @@ $show_him   = getForm("show_him");
 $show_me    = getForm("show_me");
 $clunkmate  = getForm("clunkmate");
 
-
 //@todo create a token for direct auth
 
 if ($action == 'redeem'){
