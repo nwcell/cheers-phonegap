@@ -16,7 +16,7 @@ Ext.define("Cheers.view.ClunkmateDetail", {
              
              items:[
                     {
-                        xtype: 'textfield',
+                        xtype: 'hiddenfield',
                         value: '',
                         id: 'clunk_with_fr'
                     },
@@ -54,7 +54,7 @@ Ext.define("Cheers.view.ClunkmateDetail", {
                            //console.log(record);
                            //console.log(newValue);
                            
-                           record.set('show_him',newValue);
+                           //record.set('show_him',newValue);
                            //store.sync();
                            
                                    clunk_with_fr = Ext.getCmp("clunk_with_fr").getValue();
@@ -71,21 +71,56 @@ Ext.define("Cheers.view.ClunkmateDetail", {
                                    },
                                    success: function(response, opts) {
 
-                                  // Ext.Msg.alert('Thank You','Report submitted succesfully.')
-                                   console.log('success');
+                                      
                                    },
                                    failure: function(response, opts) {
 
 
 
-                                   }
+                                    }
 
-                            });
+                                     });
 
                           }
                       }
                     
-                    }
+                    },
+                     {
+                        xtype: 'togglefield',
+                        label: 'He/She can see me',
+                        name: 'show_me_fr',  
+                        id: 'show_me_fr',
+                           listeners: {
+                            change: function(slider, thumb, newValue, oldValue) {
+
+                               console.log(newValue);
+                                       clunk_with_fr = Ext.getCmp("clunk_with_fr").getValue();
+                                       Ext.Ajax.request({
+                                       url: API_URL,
+                                       async : false,
+                                       params: {
+                                       id: USER_ID,
+                                       clunkmate: clunk_with_fr,
+                                       action: 'setClunkmateMe',
+                                       show_me: newValue,
+
+                                       random: Math.random()
+                                       },
+                                       success: function(response, opts) {
+                                      
+                                       },
+                                       failure: function(response, opts) {
+
+
+
+                                       }
+
+                                });
+
+                            }
+                        }
+                     
+                      }
                      
                      
                     

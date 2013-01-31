@@ -170,13 +170,10 @@ Ext.define("Cheers.controller.Main", {
               },
               failure: function(response, opts) {
 
-
-
               }
 
        });
-   
-      
+ 
       
     },
     backFromRedeem: function(){
@@ -262,12 +259,10 @@ Ext.define("Cheers.controller.Main", {
                 bp_badge = Ext.getCmp("bp_badge");
                 bp_badge.setHtml(badgeresult);
 
-
                  
                 clunkmate = result.recent;
                 var clunkmate_html ='';
                 for(i = 0; i< clunkmate.length;i++){
-                    //console.log(clunkmate[i].first_name);
                     
                     photo = 'https://graph.facebook.com/'+ clunkmate[i].facebook_uid+'/picture'
                     
@@ -607,46 +602,7 @@ Ext.define("Cheers.controller.Main", {
          }, panel);
          
        
-      /* clunkability = Ext.getCmp("clunkability");
-       clunkability.addCls('hidden');
-       
-       pointsbardisabled = Ext.getCmp("pointsbardisabled");
-       pointsbardisabled.addCls('hidden');
-        
-       refresh_location = Ext.getCmp("refresh_location");
-       refresh_location.addCls('hidden');
-       
-       refresh_location = Ext.getCmp("refresh_location");
-       refresh_location.addCls('hidden');
-       
-       location_text = Ext.getCmp("location_text");
-       location_text.setHtml('<div style="font-size:16px">Checking your location...</div>')
      
-       points_text = Ext.getCmp("points_text");
-       points_text.addCls('hidden');
-        
-       bgpoints = Ext.getCmp("bgpoints");
-       bgpoints.addCls('hidden');
-        
-       pointsbar = Ext.getCmp("pointsbar");
-       pointsbar.addCls('hidden');
-        
-       bgstatus = Ext.getCmp("bgstatus");
-       bgstatus.addCls('hidden');
-        
-        
-       statustext = Ext.getCmp("statustext");
-       statustext.addCls('hidden');
-        
-       bgbadges = Ext.getCmp("bgbadges");
-       bgbadges.addCls('hidden');
-        
-       badgetext = Ext.getCmp("badgetext");
-       badgetext.addCls('hidden');
-        
-       bugreport = Ext.getCmp("bugreport");
-       bugreport.addCls('hidden');
-        */
        this.clunkRefresh();
      
    }, 
@@ -675,13 +631,23 @@ Ext.define("Cheers.controller.Main", {
                 async : false,
                 params: {
                 id: USER_ID,
-                clunkmate: clunk_with_fr,
+                clunkmate: e.data.bump_with,
                 action: 'getClunkmateSetting',
                 random: Math.random()
                 },
                 success: function(response, opts) {
                     
-                    alert(response.responseText);
+                    try{
+                        result = Ext.decode(response.responseText);
+                         show_him_fr = Ext.getCmp("show_him_fr");
+                         show_him_fr.setValue(result.show_him);
+                         show_me_fr = Ext.getCmp("show_me_fr");
+                         show_me_fr.setValue(result.show_me);
+       
+                    }catch(err){
+                        
+                    }
+                    
                 
                 },
                 failure: function(response, opts) {
@@ -692,159 +658,13 @@ Ext.define("Cheers.controller.Main", {
 
          });
        
-       show_him_fr = Ext.getCmp("show_him_fr");
-       show_him_fr.setValue(0);
+      
        
         var myview = this.getMainPannel();
         myview.setActiveItem(7)
         
         return true;
-       //alert(1);
-      store = this.Friends;
-      //console.log('frieendds');
-      //console.log(e.data.id);
-      record = store.findRecord('id', e.data.id);
-      
-      //console.log(record);
-      
-      if (!this.overlay){
-       this.overlay = Ext.Viewport.add({
-            xtype: 'panel',
-            centered:true,
-            modal: true,
-            hideOnMaskTap: true,
-            hidden: true,       
-            width:   260  ,
-            height:  250  ,
-
-            styleHtmlContent: true,
-            scrollable: false,
-
-            // Insert a title docked at the top with a title
-            items: [
-               /* {
-                    xtype: 'hiddenfield',
-                    value: '',
-                    id: 'clunk_with_fr'
-                },*/
-                {
-                     html: '<b>Robert Gray</b>',
-                     id: 'clunker_name_fr',
-                     listeners:[{
-                         element: 'element',
-                         delegate: 'div.close',
-                         event: 'tap',
-                         fn: function(){
-                             alert('close');
-                         }
-                     }]
-                },
-               /* {
-                    xtype: 'togglefield',
-                    label: 'Can see him/her',
-                    name: 'show_him_fr',  
-                    id: 'show_him_fr',
-                    listeners: {
-                        change: function(slider, thumb, newValue, oldValue) {
-                           
-                          // store = Ext.getStore("Clunkmate");
-                           //console.log('Record?');
-                           //console.log(record);
-                           //console.log(newValue);
-                           
-                           record.set('show_him',newValue);
-                           //store.sync();
-                           
-                                   clunk_with_fr = Ext.getCmp("clunk_with_fr").getValue();
-                                   Ext.Ajax.request({
-                                   url: API_URL,
-                                   async : false,
-                                   params: {
-                                   id: USER_ID,
-                                   clunkmate: clunk_with_fr,
-                                   action: 'setClunkmateHim',
-                                   show_him: newValue,
-                                   
-                                   random: Math.random()
-                                   },
-                                   success: function(response, opts) {
-
-                                  // Ext.Msg.alert('Thank You','Report submitted succesfully.')
-                                   console.log('success');
-                                   },
-                                   failure: function(response, opts) {
-
-
-
-                                   }
-
-                            });
-
-                        }
-                    }
-                    
-                },*/
-                {
-                    xtype: 'togglefield',
-                    label: 'He/She can see me',
-                    name: 'show_me_fr',  
-                    id: 'show_me_fr',
-                       listeners: {
-                        change: function(slider, thumb, newValue, oldValue) {
-                           
-                           console.log(newValue);
-                                   clunk_with_fr = Ext.getCmp("clunk_with_fr").getValue();
-                                   Ext.Ajax.request({
-                                   url: API_URL,
-                                   async : false,
-                                   params: {
-                                   id: USER_ID,
-                                   clunkmate: clunk_with_fr,
-                                   action: 'setClunkmateMe',
-                                   show_me: newValue,
-                                   
-                                   random: Math.random()
-                                   },
-                                   success: function(response, opts) {
-
-                                  // Ext.Msg.alert('Thank You','Report submitted succesfully.')
-                                   console.log('success');
-                                   },
-                                   failure: function(response, opts) {
-
-
-
-                                   }
-
-                            });
-
-                        }
-                    }
-                     
-                }
-            ]
-        });
-        }
-        
-               
-        overlay = this.overlay;
-        
-       // overlay.setValue('show_him_fr', 1);
-        
-        console.log(e);
-        clunk_with_fr = Ext.getCmp("clunk_with_fr");
-        clunk_with_fr.setValue(e.data.bump_with);
-        clunker_name_fr = Ext.getCmp("clunker_name_fr");
-        clunker_name_fr.setHtml(e.data.first_name +' ' + e.data.last_name);
-        
-        show_him_fr = Ext.getCmp("show_him_fr");
-        show_him_fr.setValue(e.data.show_him);
-        
-        show_me_fr = Ext.getCmp("show_me_fr");
-        show_me_fr.setValue(e.data.show_me);
-        
-        overlay.show();
-        
+       
        
    },
    backFromMap: function(){
@@ -909,48 +729,10 @@ Ext.define("Cheers.controller.Main", {
     ClunkmateShow: function(){
         alert(BP_ID);
         if (BP_ID == null ) result = this.getBPLocation();
-        console.log(result);
-       //get points from bp
-     
-       
-       //show the points
-       
-       
-       //show a button for bar tender to press
-       
-       //wait for a success message
-       
-       //if success is shown bar tender gives a drink
-        
-       /*var Items = Ext.create('Ext.data.Store', {
-                model: 'Cheers.model.Clunkmate',
-                sorterns: 'name',
-                 grouper: {
-                    groupFn: function(record) {
-                        return record.get('name')[0];
-                    }
-                },
-                proxy: {
-                        type: 'ajax',
-                        url : API_URL +'?id='+USER_ID + '&action=clunkmate&rand='+ Math.random(),	
-                        reader : {
-                                type : 'json',
-                                rootProperty: ''
-                            }
-                }
-        });
-        Items.load();
-        
-         console.log(Items);
-        ClunkmateList =  Ext.getCmp("ClunkmateList");
-	ClunkmateList.setStore(Items); */
-        
-     
+ 
     },
       ClunkmateApprovalShow: function(){
-       // alert(1);
-       
-         
+      
        var Items = Ext.create('Ext.data.Store', {
                 model: 'Cheers.model.Clunkmate',
                 sorterns: 'name',

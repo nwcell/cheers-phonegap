@@ -40,8 +40,17 @@ if ($action == 'setClunkmateHim'){
     $sql = "UPDATE clunkmate SET show_him = ? WHERE user_id = ? AND  clunker_id = ?";
     $res = $db->query($sql, array($show_him, $id, $clunkmate));
     
-    echo $sql;
-    echo "$show_him, $id, $clunkmate";
+    //echo $sql;
+    //echo "$show_him, $id, $clunkmate";
+    exit;
+}
+
+if ($action == 'setClunkmateMe'){
+    $sql = "UPDATE clunkmate SET show_me = ? WHERE user_id = ? AND  clunker_id = ?";
+    $res = $db->query($sql, array($show_me, $id, $clunkmate));
+    
+    //echo $sql;
+   // echo "$show_me, $id, $clunkmate";
     exit;
 }
 
@@ -401,7 +410,6 @@ if ($action == 'getClunkmateSetting'){
     
     $sql  = "SELECT * FROM clunkmate WHERE user_id = ? and clunker_id = ? ";
     $rows = $db->fetchRow($sql, array($id, $clunkmate));
-    //echo '1';
     
     echo json_encode($rows);
     exit;
