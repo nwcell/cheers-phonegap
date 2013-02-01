@@ -247,8 +247,8 @@ Ext.define("Cheers.controller.Main", {
                 bp_points_text = Ext.getCmp("bp_points_text");
                 bp_points_text.setHtml(result.bp.points +'/'+result.bp.max_total_points);
                 
-                bp_status = Ext.getCmp("bp_status");
-                bp_status.setHtml('Your rank - ' + result.bp.rank);
+               // bp_status = Ext.getCmp("bp_status");
+              //  bp_status.setHtml('Your rank - ' + result.bp.rank);
                 
                 
                 badges = result.badges;
@@ -256,8 +256,8 @@ Ext.define("Cheers.controller.Main", {
                 for(i = 0; i< badges.length;i++){
                     badgeresult = badgeresult +' *'+ badges[i];
                 }
-                bp_badge = Ext.getCmp("bp_badge");
-                bp_badge.setHtml(badgeresult);
+               // bp_badge = Ext.getCmp("bp_badge");
+                //bp_badge.setHtml(badgeresult);
 
                  
                 clunkmate = result.recent;
@@ -266,7 +266,7 @@ Ext.define("Cheers.controller.Main", {
                     
                     photo = 'https://graph.facebook.com/'+ clunkmate[i].facebook_uid+'/picture'
                     
-                    clunkmate_html = clunkmate_html + '<div style="width:150px;padding:5px;height:45px;font-size:12px"><img src="'+photo+'" align="left" height="40px">'+clunkmate[i].first_name+' '+ clunkmate[i].last_name+'<br> 5 Hours ago</div>'; 
+                    clunkmate_html = clunkmate_html + '<div style="width:150px;padding:5px;height:45px;font-size:12px"><img src="'+photo+'" align="left" height="40px">'+clunkmate[i].first_name+' '+ clunkmate[i].last_name+'<br> '+ clunkmate[i].diff +' Hour(s) ago</div>'; 
                 }
                 bp_recent = Ext.getCmp("bp_recent");
                 bp_recent.setHtml(clunkmate_html);
@@ -518,10 +518,10 @@ Ext.define("Cheers.controller.Main", {
 
                         bgpoints.removeCls('hidden');                                  
                         pointsbar.removeCls('hidden');                                  
-                        bgstatus.removeCls('hidden');                                 
-                        statustext.removeCls('hidden');                                   
-                        bgbadges.removeCls('hidden');                                   
-                        badgetext.removeCls('hidden');
+                       // bgstatus.removeCls('hidden');                                 
+                       // statustext.removeCls('hidden');                                   
+                       // bgbadges.removeCls('hidden');                                   
+                       // badgetext.removeCls('hidden');
                         bugreport.removeCls('hidden');
                         
                         window.bumpable('YES', function(result) {

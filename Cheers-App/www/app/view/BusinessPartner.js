@@ -63,7 +63,7 @@ Ext.define("Cheers.view.BusinessPartner", {
                         id: 'bp_description',
                         cls: 'bp_description_cls'
                      },
-                     {
+                   /*  {
                         html: '',
                         id: 'bpbg_status',
                         cls: 'bpbg_status_cls'
@@ -83,7 +83,7 @@ Ext.define("Cheers.view.BusinessPartner", {
                         html:'',
                         id: 'bp_badge',
                         cls: 'bp_badge_cls'
-                     },
+                     },*/
                      {
                          html:'<div style="font-size:10px">Recent Clunkmates</div>',
                          cls: 'bp_recent_head_cls'

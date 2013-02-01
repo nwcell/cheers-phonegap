@@ -23,6 +23,7 @@ $show_him   = getForm("show_him");
 $show_me    = getForm("show_me");
 $clunkmate  = getForm("clunkmate");
 
+
 //@todo create a token for direct auth
 
 if ($action == 'redeem'){
@@ -39,8 +40,8 @@ if ($action == 'setClunkmateHim'){
     $sql = "UPDATE clunkmate SET show_him = ? WHERE user_id = ? AND  clunker_id = ?";
     $res = $db->query($sql, array($show_him, $id, $clunkmate));
     
-    //echo $sql;
-    //echo "$show_him, $id, $clunkmate";
+    echo $sql;
+    echo "$show_him, $id, $clunkmate";
     exit;
 }
 
@@ -48,8 +49,8 @@ if ($action == 'setClunkmateMe'){
     $sql = "UPDATE clunkmate SET show_me = ? WHERE user_id = ? AND  clunker_id = ?";
     $res = $db->query($sql, array($show_me, $id, $clunkmate));
     
-    //echo $sql;
-   // echo "$show_me, $id, $clunkmate";
+    echo $sql;
+    echo "$show_me, $id, $clunkmate";
     exit;
 }
 
@@ -80,20 +81,31 @@ if ($action == 'getBpDetailsMore'){
             INNER JOIN clunkmate t3 ON t1.id = t3.user_id AND t3.clunker_id = ?
             INNER JOIN clunkmate t4 ON t4.user_id = t3.clunker_id AND t4.clunker_id = t1.id
             WHERE t1.id <> ? AND t3.show_me = ? AND t4.show_him = ?
+            ORDER BY t2.date DESC
             LIMIT 5
             ";
           //INNER JOIN clunkmate t3 ON t1.id = t3.user_id AND t3.clunker_id = ?  Get clunker_id with id = USERID
           
           //
     $clunkmates = $db->fetchAll($sql, array($bid,1, $id, $id, 1, 1));
+    //echo $sql.'<br><br>';
+    //echo "$bid,1, $id, $id, 1, 1 <br>";
+    //print_r($clunkmates);
+    //exit;
+    for($x = 0; $x <  count($clunkmates); $x++){
+        $d1=strtotime($clunkmates[$x]['date']);
+        $d2= time();
+        $clunkmates[$x]['diff'] = floor(($d2-$d1)/3600);
+    }
     
-   
-    
+    //echo "Hours difference = ".floor(($d2-$d1)/3600);
+
     $rows['rank'] = 'Alpha Player';
     $result['success'] = true;
     $result['bp'] = $rows;
     $result['recent'] = $clunkmates;
     $result['badges'] = array('Bender','Entourage','Player');
+    $result['clunkmates'] = $clunkmates;
     
      
     
@@ -229,6 +241,15 @@ if ($action == 'match'){
     //get name bump with
     $sql = "SELECT * FROM login WHERE id = ? ";
     $clunk_with = $db->fetchRow($sql, array($bump_with));
+    
+    //check if this guy is already  friend 
+    $sql = "SELECT * FROM clunkmate WHERE user_id = ? AND clunker_id = ? ";
+    $clunkmate_is = $db->fetchRow($sql, array($id, $bump_with));
+    if (!$clunkmate_is){
+        $sql = "INSERT INTO clunkmate (user_id, clunker_id, show_me, show_him, status) 
+                VALUES(?, ?, ?, ?, ?)";
+        $res = $db->query($sql, array($id, $bump_with, 1, 1, 1));
+    }
     
     //save to clunks
     $sql = "INSERT INTO clunks(user_id, bump_with, lat, lon) VALUES (?, ?,
