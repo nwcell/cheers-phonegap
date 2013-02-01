@@ -519,7 +519,9 @@ Ext.define("Cheers.controller.Main", {
 
 
                         bgpoints.removeCls('hidden');                                  
-                        pointsbar.removeCls('hidden');                                  
+                        pointsbar.removeCls('hidden');  
+                        
+                        //uncomment to enable Badge and Rank
                        // bgstatus.removeCls('hidden');                                 
                        // statustext.removeCls('hidden');                                   
                        // bgbadges.removeCls('hidden');                                   

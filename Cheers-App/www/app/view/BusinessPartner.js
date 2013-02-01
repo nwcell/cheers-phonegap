@@ -63,7 +63,9 @@ Ext.define("Cheers.view.BusinessPartner", {
                         id: 'bp_description',
                         cls: 'bp_description_cls'
                      },
-                   /*  {
+                   /* Uncomment to enable badge and rank
+                     
+                     {
                         html: '',
                         id: 'bpbg_status',
                         cls: 'bpbg_status_cls'
