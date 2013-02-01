@@ -346,7 +346,9 @@ Ext.define("Cheers.controller.Main", {
    },
    backFromReport: function(){
         
-        Ext.Viewport.animateActiveItem(this.getMainPannel(), {type:'slide', direction:'right'});
+       // Ext.Viewport.animateActiveItem(this.getMainPannel(), {type:'slide', direction:'right'});
+            var myview = this.getMainPannel();
+            myview.setActiveItem(0) 
    },
    clunkViewTap: function(){
      alert(1);  
@@ -556,8 +558,11 @@ Ext.define("Cheers.controller.Main", {
        
    },
    bugReport: function(){
-    if (!this.Report) this.Report = Ext.create('Cheers.view.Report');
-       Ext.Viewport.animateActiveItem(this.Report, {type:'slide', direction:'left'});
+   // if (!this.Report) this.Report = Ext.create('Cheers.view.Report');
+    //   Ext.Viewport.animateActiveItem(this.Report, {type:'slide', direction:'left'});
+    
+     var myview = this.getMainPannel();
+        myview.setActiveItem(9) 
    
    },
    clunkViewUpdate: function(panel){

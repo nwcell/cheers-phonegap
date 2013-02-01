@@ -1,9 +1,16 @@
 Ext.define('Cheers.view.Report', {
     extend: 'Ext.form.Panel',    
+    xtype: 'reportType',
     id: 'reportId',
-    config: {             
-             scrollable:true,
-             layout: 'fit',
+    config: {     
+            title:'',
+             iconCls: 'User',
+             scrollable:true, 
+             hidden:true,
+            
+            
+             fullscreen: true,
+         
         
         items: [
            {

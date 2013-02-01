@@ -40,8 +40,7 @@ if ($action == 'setClunkmateHim'){
     $sql = "UPDATE clunkmate SET show_him = ? WHERE user_id = ? AND  clunker_id = ?";
     $res = $db->query($sql, array($show_him, $id, $clunkmate));
     
-    echo $sql;
-    echo "$show_him, $id, $clunkmate";
+   
     exit;
 }
 
@@ -49,8 +48,7 @@ if ($action == 'setClunkmateMe'){
     $sql = "UPDATE clunkmate SET show_me = ? WHERE user_id = ? AND  clunker_id = ?";
     $res = $db->query($sql, array($show_me, $id, $clunkmate));
     
-    echo $sql;
-    echo "$show_me, $id, $clunkmate";
+    
     exit;
 }
 
@@ -67,13 +65,7 @@ if ($action == 'getBpDetailsMore'){
     
     $rows = $db->fetchRow($sql, array($id, $bid));
     
-    
-    /*
-     * ,   
-            t2.bp_id, t3.user_id, t3.clunker_id, t3.show_me, t3.show_him, t4.user_id as user_idt,
-            t4.clunker_id as clunker_idt, t4.show_me as show_met, t4.show_him as show_himt
-     */
-    //get clunkmates
+ 
     $sql = "SELECT Distinct(t2.id), t1.id as friend_id, t1.first_name, 
             t1.last_name, t1.facebook_uid, t2.date
             FROM login t1
@@ -84,14 +76,9 @@ if ($action == 'getBpDetailsMore'){
             ORDER BY t2.date DESC
             LIMIT 5
             ";
-          //INNER JOIN clunkmate t3 ON t1.id = t3.user_id AND t3.clunker_id = ?  Get clunker_id with id = USERID
-          
-          //
+           
     $clunkmates = $db->fetchAll($sql, array($bid,1, $id, $id, 1, 1));
-    //echo $sql.'<br><br>';
-    //echo "$bid,1, $id, $id, 1, 1 <br>";
-    //print_r($clunkmates);
-    //exit;
+    
     for($x = 0; $x <  count($clunkmates); $x++){
         $d1=strtotime($clunkmates[$x]['date']);
         $d2= time();
@@ -174,7 +161,7 @@ if ($action == 'getBp'){
             ";
     $rows = $db->fetchAll($sql, array($lat, $lon, $lat, $id));
     
-   // print_r($rows);
+    
     if (!$rows){
         
         $result['success'] =false;
@@ -205,8 +192,7 @@ if ($action  == 'getgeo'){
      
     $rows = $db->fetchAll($sql, array($lat, $lng, $lat));
     
-   //echo '<pre>';
-   //print_r($rows);
+    
     if ($rows[0]['distance'] > 0.25){
         echo 'You should be at least in the nearest location..<br>';
     }else{
@@ -276,8 +262,7 @@ if ($action == 'match'){
      
     $rows = $db->fetchAll($sql, array($lat, $lon, $lat, $id));
    
-   // echo '<pre>';
-    // print_r($rows);
+    
     
     if($rows){ 
        
@@ -324,20 +309,15 @@ if ($action == 'match'){
             }
             
             
-            
-            // echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
-             
+          
              
              if (!$add_points){
-                 // echo 'Sorry no points added for '.$rows[0]['name']. '<br> Your Points still the same : '.( intval($rows[0]['points'])   );
-                 // echo  '<br>'.$no_points_reason;
-                  
+                 
                    $result['success'] = false;
                    $result['reason'] = $no_points_reason;
              }else{
              
-             // echo 'Points added for '.$rows[0]['name']. '<br> Your Points now : '.( intval($rows[0]['points']) + $points_to_add  );
-             // echo ' You gained '. $points_to_add;
+            
               
               $result['success'] = true;
               $result['points_gain'] = $points_to_add;
@@ -356,7 +336,6 @@ if ($action == 'match'){
              }
 
         }else{
-            // echo 'You have clunked with '.$clunk_with['first_name']. ' '. $clunk_with['last_name']. ' <br>';
               
              $result['success'] = false;
              $result['reason'] = 'Sorry the nearest Cheers deal is at "'.$rows[0]['name'].'" which is '.$rows[0]['distance']. ' miles away. Click Find deals to know more.';
@@ -446,13 +425,10 @@ if ($action == 'myclunks'){
             GROUP by t1.bump_with
             ORDER BY last_clunked DESC";
      $rows = $db->fetchAll($sql, array($id, $id));
-     //print_r($rows);
-     
-     
+    
      echo json_encode($rows);
      exit;
-     echo "[{user_id:4, photo_url:'http://graph.facebook.com/100000895460798/picture', total: '5', last_clunked:'November 14' },{user_id:4, photo_url:'http://www.facebook.com/profile.php?id=100000895460798', total: '5', last_clunked:'November 14' }]"; 
-     exit;
+    
 }
 
 if ($action == 'clunkHistory'){

@@ -100,7 +100,9 @@ Ext.define("Cheers.view.Main", {
                                } 
                             ]
                    },
-                 /*  {
+                 /*  Uncomment to Show DEBUG settings
+                  *  
+                  *     {
                       xtype: 'fieldset',
                       title: 'Debug',
                       items:[
@@ -153,6 +155,9 @@ Ext.define("Cheers.view.Main", {
             },
             {
               xtype: 'ClunkmateDetailType'
+            },
+            {
+              xtype: 'reportType'      
             }
           ,
         ]
